@@ -1,11 +1,18 @@
 package app.controladores;
 
 import java.io.IOException;
+import java.io.PrintWriter;
+import java.sql.SQLException;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
+import app.clasesDao.DAOCarrito;
+import app.clasesDao.DAOLibro;
 
 /**
  * Servlet implementation class ListarCarritoServ
@@ -27,7 +34,12 @@ public class ListarCarritoServ extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		response.getWriter().append("Served at: ").append(request.getContextPath());
+		try {
+			accionesCarrito(request, response);
+		} catch (ClassNotFoundException | SQLException | IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	/**
@@ -35,7 +47,31 @@ public class ListarCarritoServ extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		doGet(request, response);
+		try {
+			accionesCarrito(request, response);
+		} catch (ClassNotFoundException | SQLException | IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
-
+	protected void accionesCarrito(HttpServletRequest request, HttpServletResponse response) throws ClassNotFoundException, SQLException, IOException {
+		String listaJSON = "";
+		String opcion = request.getParameter("opcion"); 
+		System.out.println("Valor OPCION en carrito es: " + opcion);
+		HttpSession sesion = request.getSession();
+		int id_cliente = Integer.parseInt((sesion.getAttribute("id_cliente").toString()));
+		String id_libro = request.getParameter("id_libro");
+		System.out.println("EL ID CLIENTE EN CARRITO ES: " + id_cliente);
+		if("1".equals(opcion)) {
+			DAOCarrito.getInstance().borrarItemCarrito(Integer.parseInt(id_libro), id_cliente);
+		
+		}
+		listaJSON = DAOCarrito.getInstance().listarCarritoJSON(id_cliente);
+		System.out.println("lista JSON CARRITO en SERVLET" + listaJSON);
+		
+		
+		PrintWriter out = response.getWriter();
+		out.print(listaJSON);
+	}
 }
+

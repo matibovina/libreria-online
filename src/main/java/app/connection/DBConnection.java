@@ -81,39 +81,28 @@ public class DBConnection {
 			ps.close();
 		}
 		public static void tablaCarrito() throws SQLException, ClassNotFoundException {
-			PreparedStatement ps = getConnection().prepareStatement("CREATE TABLE IF NOT EXISTS `libreriadb`.`carrito` (\n"
+			PreparedStatement ps = getConnection().prepareStatement("CREATE TABLE IF NOT EXISTS libreriadb.carrito (\n"
 					+ "  id_carrito INT NOT NULL,\n"
 					+ "  id_cliente INT NOT NULL,\n"
 					+ "  id_libro INT NOT NULL,\n"
+					+ "  titulo VARCHAR(45) NOT NULL,\n"
+					+ "  precio DECIMAL(5) NOT NULL,\n"
 					+ "  PRIMARY KEY (id_carrito),\n"
-					+ "  INDEX id_cliente_idx (id_cliente ASC) VISIBLE,\n"
-					+ "  INDEX id_libro_idx (id_libro ASC) VISIBLE,\n"
-					+ "  CONSTRAINT id_cliente\n"
 					+ "    FOREIGN KEY (id_cliente)\n"
-					+ "    REFERENCES libreriadb.clientes (id_cliente)\n"
-					+ "    ON DELETE NO ACTION\n"
-					+ "    ON UPDATE NO ACTION,\n"
-					+ "  CONSTRAINT id_libro\n"
+					+ "    REFERENCES libreriadb.clientes (id_cliente),\n"
 					+ "    FOREIGN KEY (id_libro)\n"
-					+ "    REFERENCES libreriadb.libros (id_libro)\n"
-					+ "    ON DELETE CASCADE\n"
-					+ "    ON UPDATE CASCADE);\n"
-					+ "");
+					+ "    REFERENCES libreriadb.libros (id_libro));");
 			ps.executeUpdate();
 			ps.close();
 		}
 		public static void tablaCompra() throws SQLException, ClassNotFoundException {
 			PreparedStatement ps = getConnection().prepareStatement("CREATE TABLE IF NOT EXISTS libreriadb.compra (\n"
 					+ "  id_compra INT NOT NULL,\n"
-					+ "  precio_pagado DECIMAL(4) NOT NULL,\n"
-					+ "  id_carrito INT NOT NULL,\n"
+					+ "  monto DECIMAL(4) NOT NULL,\n"
+					+ "  id_cliente INT NOT NULL,\n"
 					+ "  PRIMARY KEY (id_compra),\n"
-					+ "  INDEX id_carrito_idx (id_carrito ASC) VISIBLE,\n"
-					+ "  CONSTRAINT id_carrito\n"
-					+ "    FOREIGN KEY (id_carrito)\n"
-					+ "    REFERENCES libreriadb.carrito (id_carrito)\n"
-					+ "    ON DELETE NO ACTION\n"
-					+ "    ON UPDATE NO ACTION);");
+					+ " FOREIGN KEY (id_cliente)\n"
+					+ " REFERENCES libreriadb.clientes (id_cliente));");
 			ps.executeUpdate();
 			ps.close();
 		}

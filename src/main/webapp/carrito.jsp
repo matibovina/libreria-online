@@ -15,78 +15,13 @@
    <a href="index.jsp"><img class="logo-nav" src="logo/logo_white_large.png" alt=""></a> 
   </header>
   <div class="buscar">
-    <form action="">
-      <p>
-        Comprar todos los elementos de la lista
-      </p>
-      <input type="submit" value="Comprar">
-    </form>
+
   </div>
   <section>
-    <table class="tabla">
-			<tr>
-				<th>ID</th>
-				<th>Titulo</th>
-        <th>Autor</th>
-        <th>Genero</th>
-        <th>Precio</th>
-        <th>Borrar</th>
-			</tr>
-					
-<%-- 				<!-- <% 
-					for(Libro libro : (ArrayList<Libro>)request.getAttribute("listaLibros")){
-				%> --> --%>
-			<tr>
-				<td>001</td>
-				<td>Harry Potter</td>
-				<td>JK Rowling</td>
-        <td>Fantasia</td>
-        <td>50 euros</td>
-        <td>
-          <a class="actions" href=""><i class="fas fa-trash-alt"></i></a>
-        </td>
-			</tr>
-			<tr>
-				<td>001</td>
-				<td>Harry Potter</td>
-				<td>JK Rowling</td>
-        <td>Fantasia</td>
-        <td>50 euros</td>
-        <td>
-          <a class="actions" href=""><i class="fas fa-trash-alt"></i></a>
-        </td>
-			</tr>
-			<tr>
-				<td>001</td>
-				<td>Harry Potter</td>
-				<td>JK Rowling</td>
-        <td>Fantasia</td>
-        <td>50 euros</td>
-        <td>
-          <a class="actions" href=""><i class="fas fa-trash-alt"></i></a>
-        </td>
-			</tr>
-			<tr>
-				<td>001</td>
-				<td>Harry Potter</td>
-				<td>JK Rowling</td>
-        <td>Fantasia</td>
-        <td>50 euros</td>
-        <td>
-          <a class="actions" href=""><i class="fas fa-trash-alt"></i></a>
-        </td>
-			</tr>
-      <tr>
-				<th></th>
-        <th></th>
-        <th></th>
-        <th>Total a pagar</th>
-        <th>$2000</th>
-        <th></th>
-
-
-			</tr>
+    <table id="tablaCarrito" class="tabla">
 		</table>
+       <a href="pago.jsp" class="btn2">Pagar</a> 
+       <a href="tablaLibros.jsp" class="btn2">Atras</a> 
     
 </section>
   <footer>
@@ -94,6 +29,7 @@
     <a class="icon-footer" href="https//:www.instagram.com"><img class="icon" src="img/instagram.png" alt=""></a>
     <a class="icon-footer" href="https//:www.twitter.com"><img class="icon" src="img/twitter.png" alt=""></a>
   </footer>
+<script src="carrito_app.js"></script>
 
 </body>
 </html>

@@ -27,7 +27,7 @@
 		<input type="hidden" name="opcion" value="6" >
 		<a   class="btn-cargar" href="cargarLibro.jsp">Cargar Nuevo Libro</a>
 		<input type="hidden" name="opcion" value="7">
-		<a id="carrito" class="btn-cargar" href="carrito.jsp"><i class="fas fa-cart-plus"></i></a>
+		<a id="carrito" class="btn-cargar" href="carrito.jsp"> Carrito (<span id="cantidadCarrito">0</span>)</a>
 		 <form id="buscarBtn"> 
 			<label for="">Buscar por</label> 
 			<select name="buscarPor" id="selector">

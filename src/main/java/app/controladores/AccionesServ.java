@@ -14,6 +14,7 @@ import javax.servlet.http.HttpSession;
 import app.clasesDao.DAOCarrito;
 import app.clasesDao.DAOLibro;
 import app.modelo.Carrito;
+import app.modelo.Libro;
 
 /**
  * Servlet implementation class AccionesServ
@@ -35,7 +36,7 @@ public class AccionesServ extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		buscarLibros(request, response);
+		AccionesLibros(request, response);
 	}
 
 	/**
@@ -43,9 +44,9 @@ public class AccionesServ extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		buscarLibros(request, response);
+		AccionesLibros(request, response);
 	}
-	protected void buscarLibros(HttpServletRequest request, HttpServletResponse response)
+	protected void AccionesLibros(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		HttpSession sesion = request.getSession();
 		int id_cliente = Integer.parseInt((sesion.getAttribute("id_cliente").toString())) ;
@@ -55,11 +56,11 @@ public class AccionesServ extends HttpServlet {
 		String buscador = request.getParameter("buscador");
 		String id_libro = request.getParameter("id_libro");
 		String precio = request.getParameter("precio");
+		int contadorCarrito = 0;
 		System.out.println("VALOR BUSCADOR" + buscador);
 		System.out.println("ID CLIENTE DE LA SESION ES: " + id_cliente);
 		int id_carrito = 0;
 		Carrito carrito = null;
-
 		try {
 			switch(opcion) {
 			case "1":
@@ -84,22 +85,24 @@ public class AccionesServ extends HttpServlet {
 				break;
 			case "5":
 				id_carrito = DAOCarrito.getInstance().buscarUltimoIdCarrito();
-				carrito = new Carrito(id_carrito, id_cliente, Integer.parseInt(id_libro));
-				DAOCarrito.getInstance().insertarCarrito_DAO(id_carrito, id_cliente, id_carrito);
+				System.err.println("este es el id del libro en SERVLET: " + id_libro);
+				Libro libro = DAOLibro.getInstance().buscarPorIdLibro(Integer.parseInt(id_libro));
+				System.err.println("este es el genero del libro en SERVLET: " + libro.getGenero());
+				carrito = new Carrito(id_carrito, id_cliente, Integer.parseInt(id_libro), libro.getTitulo(), libro.getPrecio());
+				
+				DAOCarrito.getInstance().insertarCarrito_DAO(carrito);
+				
 				break;
 			case "6":
 				break;
 			}
 			PrintWriter out = response.getWriter();
 			out.print(resultadoJSON);
-
+			
 		} catch (ClassNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}

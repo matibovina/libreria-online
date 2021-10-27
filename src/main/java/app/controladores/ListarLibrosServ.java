@@ -10,7 +10,9 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
+import app.clasesDao.DAOCarrito;
 import app.clasesDao.DAOLibro;
 import app.modelo.Cliente;
 import app.modelo.Libro;
@@ -67,35 +69,14 @@ public class ListarLibrosServ extends HttpServlet {
 	protected void listarLibros(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException, ClassNotFoundException, SQLException {
 		String listaJSON = "";
+		HttpSession sesion = request.getSession();
+		int id_cliente = Integer.parseInt((sesion.getAttribute("id_cliente").toString()));
+
 		listaJSON = DAOLibro.getInstance().listaLibrosJSON();
+
 		PrintWriter out = response.getWriter();
 		out.print(listaJSON);
 	}
 
 }
 
-//ArrayList <Libro> listaLibros = null;
-//if(buscarPor.equals("0") || valorBuscador.length() == 0) {
-//}
-//listaLibros = DAOLibro.getInstance().buscarTitulos(valorBuscador);
-//	if(listaLibros.size() != 0) {
-//request.setAttribute("listaJSON", listaJSON);
-
-//}
-//else if("1".equals(buscarPor)) {
-//System.out.println(libro.getTitulo());
-//if(libro.getId_libro() != 0) {
-// listaLibros = new ArrayList<>();
-// listaLibros.add(libro);
-//}
-
-//if(listaLibros.size() != 0) {
-//request.setAttribute("listaLibros", listaJSON);
-//} else {
-
-//listaLibros = DAOLibro.getInstance().listarLibros();
-//request.setAttribute("listaLibros", listaLibros);
-//}
-//request.setAttribute("buscarPor", buscarPor);
-//request.setAttribute("valorBuscador", valorBuscador);
-//request.getRequestDispatcher("tablaLibros.jsp").forward(request, response);

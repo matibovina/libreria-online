@@ -6,6 +6,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+import com.google.gson.Gson;
+
 import app.connection.DBConnection;
 import app.modelo.Carrito;
 import app.modelo.Cliente;
@@ -40,19 +42,21 @@ public class DAOCarrito {
 		return idLibroNuevo;
 	}
 
-	public void insertarCarrito_DAO(int id_carrito, int id_cliente, int id_libro) throws SQLException {
+	public void insertarCarrito_DAO(Carrito carrito) throws SQLException {
 
-		PreparedStatement ps = con.prepareStatement("INSERT INTO libreriadb.carrito VALUES (?,?,?)");
-		ps.setInt(1, id_carrito);
-		ps.setInt(2, id_cliente);
-		ps.setInt(3, id_libro);
-
+		PreparedStatement ps = con.prepareStatement("INSERT INTO libreriadb.carrito VALUES (?,?,?,?,?)");
+		ps.setInt(1, carrito.getId_carrito());
+		ps.setInt(2, carrito.getId_cliente());
+		ps.setInt(3, carrito.getId_libro());
+		ps.setString(4, carrito.getTitulo());
+		ps.setDouble(5, carrito.getPrecio());
 		ps.executeUpdate();
 		ps.close();
 	}
 
-	public ArrayList<Carrito> listarCarrito() throws SQLException {
-		PreparedStatement ps = con.prepareStatement("SELECT * FROM libreriadb.carrito");
+	public ArrayList<Carrito> listarCarrito(int id_cliente) throws SQLException {
+		PreparedStatement ps = con.prepareStatement("SELECT * FROM libreriadb.carrito WHERE id_cliente = ?");
+		ps.setInt(1, id_cliente);
 		ResultSet result = ps.executeQuery();
 
 		ArrayList<Carrito> listaLibros = null;
@@ -61,7 +65,7 @@ public class DAOCarrito {
 				listaLibros = new ArrayList<Carrito>();
 			}
 			listaLibros.add(
-					new Carrito(result.getInt("id_carrito"), result.getInt("id_cliente"), result.getInt("id_libro")));
+					new Carrito(result.getInt("id_carrito"), result.getInt("id_cliente"), result.getInt("id_libro"), result.getString("titulo"), result.getDouble("precio")));
 		}
 		result.close();
 		ps.close();
@@ -72,11 +76,36 @@ public class DAOCarrito {
 		}
 	}
 
-	public void borrarItemCarrito(Carrito carrito) throws SQLException {
-		PreparedStatement ps = con.prepareStatement("DELETE * FROM libreriadb.carrito WHERE id_carrito=?");
-		ps.setInt(1, carrito.getId_carrito());
+	public void borrarItemCarrito(int id_libro, int id_cliente) throws SQLException {
+		PreparedStatement ps = con.prepareStatement("DELETE FROM libreriadb.carrito WHERE id_libro=? and id_cliente=? LIMIT 1");
+		ps.setInt(1, id_libro);
+		ps.setInt(2, id_cliente);
 
 		ps.executeUpdate();
 		ps.close();
 	}
+	
+	public int contadorCarrito(int id_cliente) throws SQLException {
+		PreparedStatement ps = con.prepareStatement("SELECT count(*) FROM carrito WHERE id_cliente = ?");
+		ps.setInt(1, id_cliente);
+		int cantidadLibros = 0;
+		ResultSet result = ps.executeQuery();
+		if(result.next()) {
+			cantidadLibros = result.getInt(1);
+		}
+		result.close();
+		ps.close();
+		return cantidadLibros;
+	}
+	
+	public String listarCarritoJSON(int id_cliente) throws SQLException {
+		Gson gson = new Gson();
+
+		String JSON = gson.toJson(this.listarCarrito(id_cliente));
+
+		System.out.println(JSON);
+
+		return JSON;
+	}
+	
 }

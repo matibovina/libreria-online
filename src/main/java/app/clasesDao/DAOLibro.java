@@ -27,7 +27,7 @@ public class DAOLibro {
 		}
 		return instance;
 	}
-
+	
 	public int buscarUltimoIdLibro() throws SQLException {
 		PreparedStatement ps = con.prepareStatement("SELECT MAX(id_libro) AS id_libro FROM libreriadb.libros");
 		ResultSet result = ps.executeQuery();
@@ -38,6 +38,23 @@ public class DAOLibro {
 		result.close();
 		ps.close();
 		return idLibroNuevo;
+	}
+	
+	public Libro buscarPorIdLibro(int id_libro) throws SQLException {
+		PreparedStatement ps = con.prepareStatement("SELECT * FROM libreriadb.libros WHERE id_libro= ?");
+		ps.setInt(1, id_libro);
+		ResultSet result = ps.executeQuery();
+		Libro libro = new Libro();
+
+		if (result.next()) {
+			libro = new Libro(result.getInt("id_libro"), result.getString("titulo"), result.getString("autor"),
+					result.getString("isbn"), result.getDouble("precio"), result.getString("genero"));
+			System.out.println("ISBN DEL LIBRO EN EL DAO" + libro.getISBN());
+
+		}
+		result.close();
+		ps.close();
+		return libro;
 	}
 
 	public void insertarLibro_DAO(Libro libro) throws SQLException {

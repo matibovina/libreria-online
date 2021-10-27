@@ -13,8 +13,9 @@ var dialogoPrecio = "";
 var botonDelete = document.querySelector(".delete");
 var id_libro = "";
 var button = "";
-var carrito = document.querySelector("#carrito");
+var carrito = document.querySelector("#cantidadCarrito");
 var contadorCarrito = 0;
+
 function aceptarCancelar(id_boton){
 	dialogoPrecio = id_boton.id;
 }
@@ -80,7 +81,7 @@ function respuestaServidor() {
 					"<td>" + listaLibrosJSON[i].autor + "</td>" +
 					"<td>" + listaLibrosJSON[i].ISBN + "</td>" +
 					"<td>" + listaLibrosJSON[i].genero + "</td>" +
-					"<td>" + listaLibrosJSON[i].precio + "</td>" +
+					"<td>" + listaLibrosJSON[i].precio + "&euro;</td>" +
 					"<td><input type=\"hidden\" name=\"opcion\" value=\"3\">" +
 					"<button id=\"1\" class=\"actions\" type=\"submit\" onclick=\"obtenerIdLibro(" + listaLibrosJSON[i].id_libro + ",this)\"><i class=\"fas fa-edit\"></i></button>" +
 					"<input type=\"hidden\" name=\"opcion\" value=\"4\">" +
@@ -165,7 +166,7 @@ function respuestaServidorBuscador() {
 						"<td>" + resultadoBusquedaJSON[i].autor + "</td>" +
 						"<td>" + resultadoBusquedaJSON[i].ISBN + "</td>" +
 						"<td>" + resultadoBusquedaJSON[i].genero + "</td>" +
-						"<td>" + resultadoBusquedaJSON[i].precio + "</td>" +
+						"<td>" + resultadoBusquedaJSON[i].precio + "&euro;</td>" +
 					"<td><input type=\"hidden\" name=\"opcion\" value=\"3\">" +
 					"<button id=\"1\" class=\"actions\" type=\"submit\" onclick=\"obtenerIdLibro(" + resultadoBusquedaJSON[i].id_libro + ",this)\"><i class=\"fas fa-edit\"></i></button>" +
 					"<input type=\"hidden\" name=\"opcion\" value=\"4\">" +
@@ -192,8 +193,7 @@ botonAtras.addEventListener("click", function(){
 	botonAtras.style.display = "none";
 })
 
-var llamadaDelete = getXMLHTTPRequest();
-
+var llamadaAcciones = getXMLHTTPRequest();
 function obtenerIdLibro(idLibro, btn){
 	id_libro = idLibro
 	button = btn.id
@@ -243,26 +243,27 @@ function llamadaServidorAcciones() {
 	}
 
 	console.log(miUrl)
-	llamada.open("POST", miUrl, true);
-	llamada.onreadystatechange = respuestaServidorAcciones;
-	llamada.send(null);
+	llamadaAcciones.open("POST", miUrl, true);
+	llamadaAcciones.onreadystatechange = respuestaServidorAcciones;
+	llamadaAcciones.send(null);
 	inputPrecio.value = "";
 }
 
 function respuestaServidorAcciones(){
-		if (llamada.readyState == 4) {
-		if (llamada.status == 200) {
+		if (llamadaAcciones.readyState == 4) {
+		if (llamadaAcciones.status == 200) {
 	  
 	 
 		llamadaServidor()
 	  if(button == "3"){
-		carrito.innerHTML = "("+ (contadorCarrito++) +")";
+		contadorCarrito++;
+		carrito.innerHTML = contadorCarrito;
 		console.log("respuesta servidor en boton carrito")
 		llamadaServidor()
 	} else if(button == "4"){
+		
 		console.log("respuesta servidor en boton comprar")
 	}
-			
 		}
 	}
 }
