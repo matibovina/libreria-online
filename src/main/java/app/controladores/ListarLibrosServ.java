@@ -71,7 +71,7 @@ public class ListarLibrosServ extends HttpServlet {
 		String listaJSON = "";
 		HttpSession sesion = request.getSession();
 		int id_cliente = Integer.parseInt((sesion.getAttribute("id_cliente").toString()));
-
+		
 		listaJSON = DAOLibro.getInstance().listaLibrosJSON();
 
 		PrintWriter out = response.getWriter();

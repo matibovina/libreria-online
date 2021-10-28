@@ -1,6 +1,11 @@
 var id_libro = "";
 var button = "";
 var totalPrecioCarrito = 0;
+var formularioPago = "";
+var confirmacionPago = "";
+var tablaCarrito = "";
+var botonesCarrito = ""
+var precioLibro = "";
 
 function getXMLHTTPRequest() {
 	try {
@@ -25,7 +30,6 @@ function llamadaServidorCarrito() {
 	var destino = "ListarCarritoServ";
 	var numRandom = parseInt(Math.floor(Math.random() * 9999999999999));
 	var miUrl = destino + '?random=' + numRandom + "";
-	console.log(miUrl + "esta url es de la lista")
 	llamada3.open("POST", miUrl, true);
 	llamada3.onreadystatechange = respuestaServidor;
 	llamada3.send(null);
@@ -33,25 +37,20 @@ function llamadaServidorCarrito() {
 
 function respuestaServidor() {
 	if (llamada3.readyState == 4) {
-		console.log(llamada3.status);
 		if (llamada3.status == 200) {
 			listaCarrito = llamada3.responseText;
-			console.log(listaCarrito);
 			listaCarritoJSON = JSON.parse(listaCarrito);
-			console.log(listaCarritoJSON);
 			var row = "<tr>" +
 				" <th>ID Ciente</th>" +
 				" <th>ID Libro</th>" +
 				"<th>Titulo</th><th>Precio</th><th>Borrar</th></tr>";
-			console.log("el json tiene: " + listaCarritoJSON.length);
 			for (let i = 0; i < listaCarritoJSON.length; i++) {
-				console.log("ENTRA AL FOR LOOP");
 				row += "<tr><td>" + listaCarritoJSON[i].id_cliente + "</td>" +
 					"<td>" + listaCarritoJSON[i].id_libro + "</td>" +
 					"<td>" + listaCarritoJSON[i].titulo + "</td>" +
 					"<td>" + listaCarritoJSON[i].precio + "&euro;</td>" +
 					"<td><button id=\"2\" class=\"actions\" type=\"submit\" onclick=\"obtenerIdLibro(" + 
-					listaCarritoJSON[i].id_libro + 
+					 listaCarritoJSON[i].precio + "," +listaCarritoJSON[i].id_libro + 
 					",this)\"><i class=\"fas fa-trash-alt\"></i></button>" +
 					"</td></tr>";
 					totalPrecioCarrito += listaCarritoJSON[i].precio;
@@ -62,7 +61,7 @@ function respuestaServidor() {
 				"<th>Total</th><th>" + totalPrecioCarrito + "&euro;</th><th></th></tr>";
 			document.getElementById('tablaCarrito').innerHTML = row;
 			document.getElementById('tablaCarrito').innerHTML += bottomRow;
-
+					totalPrecioCarrito = 0;
 		}
 	}
 }
@@ -71,12 +70,17 @@ function respuestaServidor() {
 
 window.onload = function() {
 	llamadaServidorCarrito();
+
 }
+	formularioPago = document.querySelector("#pago");
+	confirmacionPago = document.querySelector("#confirmacionCompra");
+	formularioPago.style.display = "none";
+	confirmacionPago.style.display = "none";
 
 
-function obtenerIdLibro(idLibro, btn){
+function obtenerIdLibro(precio_libro, idLibro, btn){
 	id_libro = idLibro
-	
+	precioLibro = precio_libro
 	button = btn.id
 	llamadaServidorCarritoBorrar()
 	}
@@ -84,22 +88,32 @@ function obtenerIdLibro(idLibro, btn){
 
 	var destino = "ListarCarritoServ";
 	var numRandom = parseInt(Math.floor(Math.random() * 9999999999999));
-
+	
 	var miUrl = destino + '?random=' + numRandom + "&opcion=1" + "&id_libro=" + id_libro ;
-	console.log(miUrl);
 	llamada3.open("POST", miUrl, true);
 	llamada3.onreadystatechange = respuestaServidorBorrar;
 	llamada3.send(null);
 }
 
 function respuestaServidorBorrar() {
-	console.log("esta funcion es llamada boton borrar");
-
 	if (llamada3.readyState == 4) {
-		console.log(llamada3.status);
 		if (llamada3.status == 200) {
 				llamadaServidorCarrito()
-			}
-			}
-			}
-	
+		}
+	}
+}
+botonPagar = document.querySelector("#botonPagar").addEventListener("click", function(e){
+	e.preventDefault()
+	mostrarFormulario()
+})
+function mostrarFormulario() {
+	formularioPago.style.display = "flex";
+	tablaCarrito = document.querySelector("#tablaCarrito").style.display = "none";
+	botonesCarrito = document.querySelector("#botonesCarrito").style.display = "none";
+}
+
+formulario = document.addEventListener("submit", function(e){
+	e.preventDefault()
+	confirmacionPago.style.display = "flex";
+	formularioPago.style.display = "none";
+})

@@ -49,7 +49,7 @@ public class DAOCarrito {
 		ps.setInt(2, carrito.getId_cliente());
 		ps.setInt(3, carrito.getId_libro());
 		ps.setString(4, carrito.getTitulo());
-		ps.setDouble(5, carrito.getPrecio());
+		ps.setInt(5, carrito.getPrecio());
 		ps.executeUpdate();
 		ps.close();
 	}
@@ -65,7 +65,7 @@ public class DAOCarrito {
 				listaLibros = new ArrayList<Carrito>();
 			}
 			listaLibros.add(
-					new Carrito(result.getInt("id_carrito"), result.getInt("id_cliente"), result.getInt("id_libro"), result.getString("titulo"), result.getDouble("precio")));
+					new Carrito(result.getInt("id_carrito"), result.getInt("id_cliente"), result.getInt("id_libro"), result.getString("titulo"), result.getInt("precio")));
 		}
 		result.close();
 		ps.close();
@@ -98,13 +98,11 @@ public class DAOCarrito {
 		return cantidadLibros;
 	}
 	
+	
+	
 	public String listarCarritoJSON(int id_cliente) throws SQLException {
 		Gson gson = new Gson();
-
 		String JSON = gson.toJson(this.listarCarrito(id_cliente));
-
-		System.out.println(JSON);
-
 		return JSON;
 	}
 	

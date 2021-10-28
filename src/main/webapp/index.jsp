@@ -27,10 +27,10 @@
 			<div class="login">
 				<input type="hidden" name="opcion" value="1"> 
 				
-			<input class="btn" type="submit" value="Log in">  
+			<input class="btn2" type="submit" value="Log in">  
 					
 				<input type="hidden" name="opcion" value="2"> 
-				<input class="btn" type="submit" value="Register">  
+				<input class="btn2" type="submit" value="Register">  
 				<!-- 	<a class="btn" href="LoginServ?opcion=2">Registrarse</a> -->
 			</div>
 		</form>

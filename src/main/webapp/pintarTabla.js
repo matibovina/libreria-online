@@ -43,27 +43,18 @@ function llamadaServidor() {
 	var destino = "ListarLibrosServ";
 	var numRandom = parseInt(Math.floor(Math.random() * 9999999999999));
 	var miUrl = destino + '?random=' + numRandom + "";
-	console.log(miUrl);
 	llamada.open("GET", miUrl, true);
 	llamada.onreadystatechange = respuestaServidor;
 	llamada.send(null);
 }
 
 function respuestaServidor() {
-	console.log("esta funcion es llamada");
 
 	if (llamada.readyState == 4) {
-		console.log(llamada.status);
 		if (llamada.status == 200) {
 
 			listaLibros = llamada.responseText;
 			listaLibrosJSON = JSON.parse(listaLibros);
-
-			console.log("ESTA LISTA ESTA EN EL AJAX" + listaLibros);
-
-			console.log(listaLibros);
-
-
 
 			var row = "<tr>" +
 				" <th>ID</th>" +
@@ -74,7 +65,6 @@ function respuestaServidor() {
 				"<th>Precio</th>" +
 				"<th>Editar / Borrar / Agregar al carrito / Comprar</th>" +
 				"</tr>";
-			console.log("el json tiene: " + listaLibrosJSON.length);
 			for (let i = 0; i < listaLibrosJSON.length; i++) {
 				row += "<tr><td>" + listaLibrosJSON[i].id_libro + "</td>" +
 					"<td>" + listaLibrosJSON[i].titulo + "</td>" +
@@ -98,9 +88,6 @@ function respuestaServidor() {
 	}
 }
 
-window.onload = function() {
-	llamadaServidor();
-}
 
 
 
@@ -123,7 +110,6 @@ function llamadaServidorBuscador() {
 
 	var numRandom = parseInt(Math.floor(Math.random() * 9999999999999));
 	var miUrl = destino + '?random=' + numRandom + optionUrl + buscador;
-	console.log(miUrl);
 	llamada2.open("POST", miUrl, true);
 	llamada2.onreadystatechange = respuestaServidorBuscador;
 	llamada2.send(null);
@@ -134,16 +120,12 @@ function llamadaServidorBuscador() {
 
 function respuestaServidorBuscador() {
 	if (llamada2.readyState == 4) {
-		console.log(llamada2.status);
 		if (llamada2.status == 200) {
 
 			resultadoBusqueda = llamada2.responseText;
-			console.log(llamada2.responseText);
 			resultadoBusquedaJSON = JSON.parse(resultadoBusqueda);
 
-			console.log("ESTA LISTA ESTA EN EL AJAX del buscador" + resultadoBusqueda);
 		/*	document.getElementById('resultado').innerHTML = resultadoBusqueda; */
-			console.log(resultadoBusqueda);
 			if (resultadoBusquedaJSON.length != 0) {
 
 
@@ -160,7 +142,6 @@ function respuestaServidorBuscador() {
 				"</tr>";
 
 				for (let i = 0; i < resultadoBusquedaJSON.length; i++) {
-					console.log("Entro al loop");
 					row += "<tr><td>" + resultadoBusquedaJSON[i].id_libro + "</td>" +
 						"<td>" + resultadoBusquedaJSON[i].titulo + "</td>" +
 						"<td>" + resultadoBusquedaJSON[i].autor + "</td>" +
@@ -197,7 +178,6 @@ var llamadaAcciones = getXMLHTTPRequest();
 function obtenerIdLibro(idLibro, btn){
 	id_libro = idLibro
 	button = btn.id
-	console.log(button + "este es el boton tocado");
 	if(button == "1"){
 		formPrecio = document.querySelector(".cambioPrecio");
 		formPrecio.style.display = "flex";
@@ -206,7 +186,6 @@ function obtenerIdLibro(idLibro, btn){
 			if(dialogoPrecio == "true"){
 		inputPrecio = document.querySelector("#precioNuevo");
 		precioNuevo ="&precio=" + inputPrecio.value;
-		console.log("el precio nuevo es: " + precioNuevo)
 		formPrecio.style.display = "none";
 		llamadaServidorAcciones()
 		} else if(dialogoPrecio == "false") {
@@ -219,20 +198,16 @@ function obtenerIdLibro(idLibro, btn){
 	} else {
 		llamadaServidorAcciones() 
 	}
-	console.log(id_libro + "id libro + id boton " + button)
 }
 
 function llamadaServidorAcciones() {
 	var destino = "AccionesServ";
-	console.log(id_libro + " con este id entra a la llamada del servidor")
 	var numRandom = Math.floor(Math.random() * 9999999999999);
 	var miUrl = "";
 	if(button == "1"){
 		optionUrl = "&opcion=3";
 		miUrl = destino + '?random=' + numRandom + optionUrl + "&id_libro=" + id_libro + precioNuevo;
-		
 	} else if(button == "2"){
-		console.log(id_libro + "este es el id del libro elegeido")
 		optionUrl = "&opcion=4";
 		miUrl = destino + '?random=' + numRandom + optionUrl + "&id_libro=" + id_libro;
 	} else if(button == "3"){
@@ -241,14 +216,11 @@ function llamadaServidorAcciones() {
 	} else if(button == "4"){
 		optionUrl = "&opcion=6";
 	}
-
-	console.log(miUrl)
 	llamadaAcciones.open("POST", miUrl, true);
 	llamadaAcciones.onreadystatechange = respuestaServidorAcciones;
 	llamadaAcciones.send(null);
 	inputPrecio.value = "";
 }
-
 function respuestaServidorAcciones(){
 		if (llamadaAcciones.readyState == 4) {
 		if (llamadaAcciones.status == 200) {
@@ -256,9 +228,7 @@ function respuestaServidorAcciones(){
 	 
 		llamadaServidor()
 	  if(button == "3"){
-		contadorCarrito++;
-		carrito.innerHTML = contadorCarrito;
-		console.log("respuesta servidor en boton carrito")
+		llamadaServidorContador()
 		llamadaServidor()
 	} else if(button == "4"){
 		
@@ -267,4 +237,35 @@ function respuestaServidorAcciones(){
 		}
 	}
 }
+
+var llamadaContadorCarrito = getXMLHTTPRequest();
+
+function llamadaServidorContador() {
+	var destino = "contadorCarritoServ";
+	var numRandom = Math.floor(Math.random() * 9999999999999);
+	console.log("llama a contador carrito por el GET");
+	var miUrl = destino + '?random=' + numRandom;
+	llamadaContadorCarrito.open("POST", miUrl, true);
+	llamadaContadorCarrito.onreadystatechange = respuestaServidorContador
+	llamadaContadorCarrito.send(null);
+	}
+	
+	function respuestaServidorContador (){
+		if (llamadaContadorCarrito.readyState == 4) {
+		if (llamadaContadorCarrito.status == 200) {
+		
+		let resultadoBusqueda = llamadaContadorCarrito.responseText;
+		console.log(parseInt(resultadoBusqueda))
+		contadorCarrito = parseInt(resultadoBusqueda);
+		carrito.innerHTML = contadorCarrito;
+		}
+		}
+	}
+	
+	window.onload = function() {
+	llamadaServidorContador()
+	llamadaServidor();
+	
+}
+
 

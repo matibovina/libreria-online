@@ -26,14 +26,10 @@ public class DBConnection {
 				props.put("user", "root");
 				props.put("password", "Aporapipe.5859");
 				Class.forName("com.mysql.cj.jdbc.Driver");
-				
-				System.out.println("intenta hacer la conexion y crear las tablas");
 				instance = DriverManager.getConnection(JDBC_url, props);
 				Statement stm = instance.createStatement();
 				String sql = "CREATE DATABASE IF NOT EXISTS libreriadb";
-				stm.executeUpdate(sql);
-				System.out.println("Database created successfully...");
-				
+				stm.executeUpdate(sql);				
 				crearTablas();
 				
 			}
@@ -48,6 +44,7 @@ public class DBConnection {
 		public static void crearTablas() throws SQLException, ClassNotFoundException {
 			tablaClientes();
 			tablaLibros();
+	//		agregarIndexPrecioTablaLibros();
 			tablaCarrito();
 			tablaCompra();
 			inserts();
@@ -74,24 +71,40 @@ public class DBConnection {
 					+ "  titulo VARCHAR(45) NOT NULL,\n"
 					+ "  autor VARCHAR(45) NOT NULL,\n"
 					+ "  isbn VARCHAR(45) NOT NULL,\n"
-					+ "  precio DECIMAL(5) NOT NULL,\n"
+					+ "  precio INT NOT NULL,\n"
 					+ "  genero VARCHAR(45) NOT NULL,\n"
 					+ "  PRIMARY KEY (id_libro));");
 			ps.executeUpdate();
 			ps.close();
 		}
+//		public static void agregarIndexPrecioTablaLibros() throws SQLException, ClassNotFoundException {
+//			PreparedStatement ps = getConnection().prepareStatement(
+//					" ALTER TABLE `libreriadb`.`libros` \n"
+//					+ "ADD INDEX `precio` (`precio` ASC) VISIBLE;");
+//			ps.executeUpdate();
+//			ps.close();
+//		}
 		public static void tablaCarrito() throws SQLException, ClassNotFoundException {
+			
 			PreparedStatement ps = getConnection().prepareStatement("CREATE TABLE IF NOT EXISTS libreriadb.carrito (\n"
 					+ "  id_carrito INT NOT NULL,\n"
 					+ "  id_cliente INT NOT NULL,\n"
 					+ "  id_libro INT NOT NULL,\n"
 					+ "  titulo VARCHAR(45) NOT NULL,\n"
-					+ "  precio DECIMAL(5) NOT NULL,\n"
+					+ "  precio INT NOT NULL,\n"
 					+ "  PRIMARY KEY (id_carrito),\n"
 					+ "    FOREIGN KEY (id_cliente)\n"
-					+ "    REFERENCES libreriadb.clientes (id_cliente),\n"
+					+ "    REFERENCES libreriadb.clientes (id_cliente)"
+					+ "		ON DELETE CASCADE\n"
+					+ "		ON UPDATE CASCADE,\n"
 					+ "    FOREIGN KEY (id_libro)\n"
-					+ "    REFERENCES libreriadb.libros (id_libro));");
+					+ "    REFERENCES libreriadb.libros (id_libro)"
+					+ "		ON DELETE CASCADE\n"
+					+ "		ON UPDATE CASCADE,"
+					+ "    CONSTRAINT `carrito_ibfk_3` FOREIGN KEY (precio)\n"
+					+ "    REFERENCES libreriadb.libros (precio)"
+					+ "		ON DELETE CASCADE"
+					+ "		ON UPDATE CASCADE);");
 			ps.executeUpdate();
 			ps.close();
 		}

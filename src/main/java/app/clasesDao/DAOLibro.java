@@ -27,7 +27,7 @@ public class DAOLibro {
 		}
 		return instance;
 	}
-	
+
 	public int buscarUltimoIdLibro() throws SQLException {
 		PreparedStatement ps = con.prepareStatement("SELECT MAX(id_libro) AS id_libro FROM libreriadb.libros");
 		ResultSet result = ps.executeQuery();
@@ -39,7 +39,7 @@ public class DAOLibro {
 		ps.close();
 		return idLibroNuevo;
 	}
-	
+
 	public Libro buscarPorIdLibro(int id_libro) throws SQLException {
 		PreparedStatement ps = con.prepareStatement("SELECT * FROM libreriadb.libros WHERE id_libro= ?");
 		ps.setInt(1, id_libro);
@@ -48,8 +48,7 @@ public class DAOLibro {
 
 		if (result.next()) {
 			libro = new Libro(result.getInt("id_libro"), result.getString("titulo"), result.getString("autor"),
-					result.getString("isbn"), result.getDouble("precio"), result.getString("genero"));
-			System.out.println("ISBN DEL LIBRO EN EL DAO" + libro.getISBN());
+					result.getString("isbn"), result.getInt("precio"), result.getString("genero"));
 
 		}
 		result.close();
@@ -63,7 +62,7 @@ public class DAOLibro {
 		ps.setString(2, libro.getTitulo());
 		ps.setString(3, libro.getAutor());
 		ps.setString(4, libro.getISBN());
-		ps.setDouble(5, libro.getPrecio());
+		ps.setInt(5, libro.getPrecio());
 		ps.setString(6, libro.getGenero());
 
 		ps.executeUpdate();
@@ -76,7 +75,6 @@ public class DAOLibro {
 		ResultSet result = ps.executeQuery();
 		boolean tituloExiste = false;
 		if (result.next()) {
-			System.out.println("Encuentra el titulo en el DAO");
 			tituloExiste = true;
 
 		}
@@ -85,13 +83,13 @@ public class DAOLibro {
 
 		return tituloExiste;
 	}
+
 	public boolean validarISBN(String isbn) throws SQLException {
 		PreparedStatement ps = con.prepareStatement("SELECT * FROM libreriadb.libros WHERE isbn= ?");
 		ps.setString(1, isbn);
 		ResultSet result = ps.executeQuery();
 		boolean isbnExiste = false;
 		if (result.next()) {
-			System.out.println("Encuentra el ISBN en el DAO");
 			isbnExiste = true;
 
 		}
@@ -100,7 +98,6 @@ public class DAOLibro {
 
 		return isbnExiste;
 	}
-
 
 	public void editarLibro_DAO(int id, Double precio) throws SQLException {
 		PreparedStatement ps = con.prepareStatement("UPDATE libreriadb.libros SET precio= ? WHERE id_libro=?");
@@ -121,7 +118,7 @@ public class DAOLibro {
 				listaLibros = new ArrayList<Libro>();
 			}
 			listaLibros.add(new Libro(result.getInt("id_libro"), result.getString("titulo"), result.getString("autor"),
-					result.getString("isbn"), result.getDouble("precio"), result.getString("genero")));
+					result.getString("isbn"), result.getInt("precio"), result.getString("genero")));
 		}
 		result.close();
 		ps.close();
@@ -143,7 +140,7 @@ public class DAOLibro {
 				listaTitulos = new ArrayList<Libro>();
 			}
 			listaTitulos.add(new Libro(result.getInt("id_libro"), result.getString("titulo"), result.getString("autor"),
-					result.getString("isbn"), result.getDouble("precio"), result.getString("genero")));
+					result.getString("isbn"), result.getInt("precio"), result.getString("genero")));
 		}
 		result.close();
 		ps.close();
@@ -153,7 +150,7 @@ public class DAOLibro {
 			return listaTitulos;
 		}
 	}
-	
+
 	public ArrayList<Libro> buscarPorISBN(String isbn) throws SQLException {
 		PreparedStatement ps = con.prepareStatement("SELECT * FROM libreriadb.libros WHERE isbn= ?");
 		ps.setString(1, isbn);
@@ -164,7 +161,7 @@ public class DAOLibro {
 				listaTitulos = new ArrayList<Libro>();
 			}
 			listaTitulos.add(new Libro(result.getInt("id_libro"), result.getString("titulo"), result.getString("autor"),
-					result.getString("isbn"), result.getDouble("precio"), result.getString("genero")));
+					result.getString("isbn"), result.getInt("precio"), result.getString("genero")));
 		}
 		result.close();
 		ps.close();
@@ -185,11 +182,7 @@ public class DAOLibro {
 
 	public String listaLibrosJSON() throws SQLException {
 		Gson gson = new Gson();
-
 		String JSON = gson.toJson(this.listarLibros());
-
-		System.out.println(JSON);
-
 		return JSON;
 	}
 
@@ -197,19 +190,12 @@ public class DAOLibro {
 		Gson gson = new Gson();
 		System.err.println("llama a la funcion JSON ISBN EN DAO");
 		String JSON = gson.toJson(this.buscarPorISBN(isbn));
-
-		System.out.println(JSON);
-
 		return JSON;
 	}
 
 	public String listarTituloJSON(String titulo) throws SQLException {
 		Gson gson = new Gson();
-
 		String JSON = gson.toJson(this.buscarTitulos(titulo));
-
-		System.out.println(JSON);
-
 		return JSON;
 	}
 }

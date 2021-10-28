@@ -50,13 +50,10 @@ public class ProcesoLogin extends HttpServlet {
 		String password = request.getParameter("password");
 		String mensaje = "";
 		int userOk = 0;
-		System.out.println(user + " " + password);
-		System.out.println("LLega a proceso log in");
 		Cliente cliente = new Cliente();
 		try {
 			cliente = DAOCliente.getInstance().buscarPorUsuario(user);
-			System.out.println(cliente.getEmail());
-			
+
 			if (cliente.getUsuario().equals(user)) {
 				if (password.equals(cliente.getPassword())) {
 					HttpSession sesion = request.getSession();
@@ -69,7 +66,7 @@ public class ProcesoLogin extends HttpServlet {
 					System.out.print("Verifico usuario y contrasenia");
 					request.getRequestDispatcher("tablaLibros.jsp").forward(request, response);
 				}
-			} else if(!cliente.getUsuario().equals(user) || !cliente.getPassword().equals(password)) {
+			} else if (!cliente.getUsuario().equals(user) || !cliente.getPassword().equals(password)) {
 				mensaje = "El usuario o la contrasenia son incorrectas o no existe el usuario.";
 				request.setAttribute("userOk", userOk);
 				request.setAttribute("mensaje", mensaje);

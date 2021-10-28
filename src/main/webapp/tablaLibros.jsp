@@ -17,6 +17,12 @@
 </head>
 <body>
 	<header>
+	<%
+	HttpSession sesion = request.getSession();
+	if (sesion.getAttribute("id_cliente") == null) {
+		response.sendRedirect("login.jsp");
+	}
+%>
 		<a href="index.jsp"><img class="logo-nav"
 			src="logo/logo_white_large.png" alt=""></a>
 	</header>
@@ -25,35 +31,33 @@
 	<!-- action="AccionesServ" method="POST" -->
 	<div class="buscar">
 		<input type="hidden" name="opcion" value="6" >
-		<a   class="btn-cargar" href="cargarLibro.jsp">Cargar Nuevo Libro</a>
+		<a   class="btn2" href="cargarLibro.jsp">Nuevo Libro</a>
 		<input type="hidden" name="opcion" value="7">
-		<a id="carrito" class="btn-cargar" href="carrito.jsp"> Carrito (<span id="cantidadCarrito">0</span>)</a>
-		 <form id="buscarBtn"> 
-			<label for="">Buscar por</label> 
+		<a id="carrito" class="btn2" href="carrito.jsp"> Carrito (<span id="cantidadCarrito">0</span>)</a>
+
+	</div>
+<div class="buscar2">
+ <form id="buscarBtn" class="form2"> 
+			<label>Buscador</label>
 			<select name="buscarPor" id="selector">
 				<option value="0">Seleccionar uno</option>
 				<option value="1">ISBN</option>
 				<option value="2">Titulo</option>
 			</select>  
-			<label for="">Buscar por titulo</label> 
 			<input type="text" name="buscador" id="valorBuscar">  
 		<!-- 	 	<input type="hidden" name="opcion" value="1">  -->
-			<input class="btn" type="submit"  value="Buscar">
+			<input class="btn2" type="submit"  value="Buscar">
 		</form> 
-		<!-- <label for="titulo">Buscar por Titulo</label>
-    	<input type="text" name="valorBuscar" id="valorBuscar">
-    	<button class="btn" onclick="llamadaServidorBuscador()">Buscar</button> -->
-	</div>
-
+		</div>
 	<section>
 
 		
 <div id="resultado"></div>
 
-	<table class="tabla" id="pintarTabla">
+	<table class="table" id="pintarTabla">
 	</table>
 	<button class="btn-cargar" id="atras">Atras</button>
-	<table class="tabla" id="pintarTablaBuscador">
+	<table class="table" id="pintarTablaBuscador">
 	</table>
       <div class="cambioPrecio" id="cambioPrecio">
       <form class="precioNuevo-form" action="">

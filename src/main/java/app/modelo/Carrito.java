@@ -1,13 +1,15 @@
 package app.modelo;
 
+import java.math.BigDecimal;
+
 public class Carrito {
 	private int id_carrito;
 	private int id_cliente;
 	private int id_libro;
 	private String titulo;
-	private double precio;
+	private int precio;
 
-	public Carrito(int id_carrito, int id_cliente, int id_libro, String titulo, double precio) {
+	public Carrito(int id_carrito, int id_cliente, int id_libro, String titulo, int precio) {
 		this.id_carrito = id_carrito;
 		this.id_cliente = id_cliente;
 		this.id_libro = id_libro;
@@ -47,11 +49,11 @@ public class Carrito {
 		this.titulo = titulo;
 	}
 
-	public double getPrecio() {
+	public int getPrecio() {
 		return precio;
 	}
 
-	public void setPrecio(double precio) {
+	public void setPrecio(int precio) {
 		this.precio = precio;
 	}
 

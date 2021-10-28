@@ -12,19 +12,18 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import app.clasesDao.DAOCarrito;
-import app.clasesDao.DAOLibro;
 
 /**
- * Servlet implementation class ListarCarritoServ
+ * Servlet implementation class contadorCarritoServ
  */
-@WebServlet("/ListarCarritoServ")
-public class ListarCarritoServ extends HttpServlet {
+@WebServlet("/contadorCarritoServ")
+public class contadorCarritoServ extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public ListarCarritoServ() {
+    public contadorCarritoServ() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -34,12 +33,7 @@ public class ListarCarritoServ extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		try {
-			accionesCarrito(request, response);
-		} catch (ClassNotFoundException | SQLException | IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		response.getWriter().append("Served at: ").append(request.getContextPath());
 	}
 
 	/**
@@ -47,28 +41,21 @@ public class ListarCarritoServ extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
+		HttpSession sesion = request.getSession();
+		int id_cliente = Integer.parseInt((sesion.getAttribute("id_cliente").toString())) ;
+		
+		int contadorCarrito = 0;
 		try {
-			accionesCarrito(request, response);
-		} catch (ClassNotFoundException | SQLException | IOException e) {
+			contadorCarrito = DAOCarrito.getInstance().contadorCarrito(id_cliente);
+		} catch (ClassNotFoundException | SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}
-	}
-	protected void accionesCarrito(HttpServletRequest request, HttpServletResponse response) throws ClassNotFoundException, SQLException, IOException {
-		String listaJSON = "";
-		String opcion = request.getParameter("opcion"); 
-		HttpSession sesion = request.getSession();
-		int id_cliente = Integer.parseInt((sesion.getAttribute("id_cliente").toString()));
-		String id_libro = request.getParameter("id_libro");
-		if("1".equals(opcion)) {
-			DAOCarrito.getInstance().borrarItemCarrito(Integer.parseInt(id_libro), id_cliente);
-		
-		}
-		listaJSON = DAOCarrito.getInstance().listarCarritoJSON(id_cliente);
-		
-		
+		}		
 		PrintWriter out = response.getWriter();
-		out.print(listaJSON);
-	}
-}
 
+		out.print(contadorCarrito);
+		
+		//doGet(request, response);
+	}
+
+}

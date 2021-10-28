@@ -1,7 +1,9 @@
 package app.controladores;
 
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.sql.SQLException;
+import java.text.DecimalFormat;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -60,7 +62,7 @@ public class ProcesoNuevoLibroServ extends HttpServlet {
 		String autor = request.getParameter("autor");
 		String isbn = request.getParameter("ISBN");
 		String genero = request.getParameter("genero");
-		double precio = Double.parseDouble(request.getParameter("precio"));
+		int precio = Integer.parseInt(request.getParameter("precio"));
 		
 		if(DAOLibro.getInstance().validarISBN(isbn) || DAOLibro.getInstance().validarTitulo(titulo)) {
 			mensaje = "Ya existe un libro con ese titulo o ISBN";
