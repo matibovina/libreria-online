@@ -22,16 +22,23 @@
 	if (sesion.getAttribute("id_cliente") == null) {
 		response.sendRedirect("login.jsp");
 	}
+	
 %>
+<%int id_cliente = (int)sesion.getAttribute("id_cliente"); %>
+	 <input type="hidden" id="id_cliente" value="<%= id_cliente%>">
 		<a href="index.jsp"><img class="logo-nav"
 			src="logo/logo_white_large.png" alt=""></a>
+			
+			<div>
+			<a class="btn2" href="" id="cerrarSesion">Cerrar Sesion</a>
+			</div>
 	</header>
 
 
 	<!-- action="AccionesServ" method="POST" -->
 	<div class="buscar">
 		<input type="hidden" name="opcion" value="6" >
-		<a   class="btn2" href="cargarLibro.jsp">Nuevo Libro</a>
+		<a  id="libroNuevo" class="btn2" href="cargarLibro.jsp">Nuevo Libro</a>
 		<input type="hidden" name="opcion" value="7">
 		<a id="carrito" class="btn2" href="carrito.jsp"> Carrito (<span id="cantidadCarrito">0</span>)</a>
 
@@ -79,5 +86,6 @@
 			class="icon" src="img/twitter.png" alt=""></a>
 	</footer>
 <script src="pintarTabla.js"></script>
+<script src="cerrarSesion.js"></script>
 </body>
 </html>

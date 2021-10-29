@@ -19,6 +19,9 @@
 	}
 %>
    <a href="index.jsp"><img class="logo-nav" src="logo/logo_white_large.png" alt=""></a> 
+   			<div>
+			<a class="btn2" href="" id="cerrarSesion">Cerrar Sesion</a>
+			</div>
   </header>
   <div class="buscar">
   </div>
@@ -62,6 +65,7 @@
     <a class="icon-footer" href="https//:www.twitter.com"><img class="icon" src="img/twitter.png" alt=""></a>
   </footer>
 <script src="carrito_app.js"></script>
+<script src="cerrarSesion.js"></script>
 
 </body>
 </html>

@@ -84,11 +84,7 @@ public class ProcesoRegisroServ extends HttpServlet {
 				DAOCliente.getInstance().insertarCliente_DAO(cliente);
 				request.getRequestDispatcher("login.jsp").forward(request, response);
 			} 
-//			else {
-//				mensaje = "Hubo un problema con el registro vuelva a intentarlo mas tarde.";
-//				request.setAttribute("mensaje", mensaje);
-//				request.getRequestDispatcher("register.jsp").forward(request, response);
-//			}
+
 		} catch (ClassNotFoundException | SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

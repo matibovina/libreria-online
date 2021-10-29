@@ -71,13 +71,15 @@ public class AccionesServ extends HttpServlet {
 				resultadoJSON = DAOLibro.getInstance().listarTituloJSON(buscador);
 				break;
 			case "3":
-				DAOLibro.getInstance().editarLibro_DAO(Integer.parseInt(id_libro), Double.parseDouble(precio));
+				DAOLibro.getInstance().editarLibro_DAO(Integer.parseInt(id_libro), Integer.parseInt(precio));
+				DAOCarrito.getInstance().editarLibro_DAO(Integer.parseInt(id_libro), Integer.parseInt(precio));
 			break;
 			case "4":
 				DAOLibro.getInstance().borrarLibro(Integer.parseInt(id_libro));
+				DAOCarrito.getInstance().borrarLibro(Integer.parseInt(id_libro));
 				break;
 			case "5":
-				
+			case "6":
 				id_carrito = DAOCarrito.getInstance().buscarUltimoIdCarrito();
 				Libro libro = DAOLibro.getInstance().buscarPorIdLibro(Integer.parseInt(id_libro));
 				carrito = new Carrito(id_carrito, id_cliente, Integer.parseInt(id_libro), libro.getTitulo(), libro.getPrecio());
@@ -87,8 +89,12 @@ public class AccionesServ extends HttpServlet {
 				System.out.println("Contador carrito" + contadorCarrito);
 				out.print(contadorCarrito);
 				break;
-			case "6":
-				break;
+			
+//				id_carrito = DAOCarrito.getInstance().buscarUltimoIdCarrito();
+//				Libro libro1 = DAOLibro.getInstance().buscarPorIdLibro(Integer.parseInt(id_libro));
+//				carrito = new Carrito(id_carrito, id_cliente, Integer.parseInt(id_libro), libro1.getTitulo(), libro1.getPrecio());
+//				DAOCarrito.getInstance().insertarCarrito_DAO(carrito);
+//				break;
 			}			
 			out.print(resultadoJSON);
 			

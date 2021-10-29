@@ -23,17 +23,19 @@
 		%>
 		<h4 class="mensaje"><%=mensaje%></h4>
 		<%}%>
-		<form action="LoginServ" method="post">
+<!-- 		<form action="LoginServ" method="post">
 			<div class="login">
 				<input type="hidden" name="opcion" value="1"> 
-				
-			<input class="btn2" type="submit" value="Log in">  
-					
-				<input type="hidden" name="opcion" value="2"> 
-				<input class="btn2" type="submit" value="Register">  
-				<!-- 	<a class="btn" href="LoginServ?opcion=2">Registrarse</a> -->
+				<input class="btn2" type="submit" value="Log in">
 			</div>
 		</form>
+		<form action="LoginServ" method="post">
+				<input type="hidden" name="opcion" value="2"> 
+				<input class="btn2" type="submit" value="Register">
+		</form> -->
+		<a href="LoginServ?opcion=1" class="btn2">Login</a>
+		<a href="LoginServ?opcion=2" class="btn2">Register</a> 
+		
 	</section>
 	<footer>
 		<a class="icon-footer" href="https//:www.facebook.com"><img
@@ -43,10 +45,5 @@
 			class="icon-footer" href="https//:www.twitter.com"><img
 			class="icon" src="img/twitter.png" alt=""></a>
 	</footer>
-
-
-
-
-
 </body>
 </html>

@@ -244,10 +244,13 @@ tr:hover {
   font-size: 20px;
 }
 a {
+	text-decoration: "none";
 	display: block;
 	text-align: center;
 	padding: 0;
 	margin: 0;
+	  color: navy;
+	
 }
 .botonesCarrito{
 	display: inline-block;

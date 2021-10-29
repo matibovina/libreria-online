@@ -99,9 +99,9 @@ public class DAOLibro {
 		return isbnExiste;
 	}
 
-	public void editarLibro_DAO(int id, Double precio) throws SQLException {
+	public void editarLibro_DAO(int id, int precio) throws SQLException {
 		PreparedStatement ps = con.prepareStatement("UPDATE libreriadb.libros SET precio= ? WHERE id_libro=?");
-		ps.setDouble(1, precio);
+		ps.setInt(1, precio);
 		ps.setInt(2, id);
 
 		ps.executeUpdate();
@@ -130,8 +130,8 @@ public class DAOLibro {
 	}
 
 	public ArrayList<Libro> buscarTitulos(String titulo) throws SQLException {
-		PreparedStatement ps = con.prepareStatement("SELECT * FROM libreriadb.libros WHERE titulo= ?");
-		ps.setString(1, titulo);
+		PreparedStatement ps = con.prepareStatement("SELECT * FROM libreriadb.libros WHERE titulo LIKE '" + titulo +"%'");
+		//ps.setString(1, titulo);
 		ResultSet result = ps.executeQuery();
 
 		ArrayList<Libro> listaTitulos = null;

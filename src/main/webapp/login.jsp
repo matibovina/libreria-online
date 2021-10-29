@@ -17,17 +17,18 @@
 		<% if (mensaje!=null){ %>
 			<h4 class="mensaje"><%= mensaje %></h4>
 		<%}%>
+		<h4 id="mensajeError" class="mensajeError">Debe completar todos los campos</h4>
   <div class="form">
-		<form action="ProcesoLogin" name="ProcesoLogin" method="POST" class="fromulario">
+		<form action="ProcesoLogin" id="logIn" name="ProcesoLogin" method="POST" class="fromulario">
 			<label for="user">Usuario</label>
 			<div class="campos-form">
 
-				<input type="text" name="user" id="" placeholder="Ingrese usuario">
+				<input type="text" name="user" id="user"  placeholder="Ingrese usuario">
 			</div>
 			<label for="password">Contraseña</label>
 			<div class="campos-form">
 
-				<input type="password" name="password" id=""
+				<input type="password" id="password" name="password"
 					placeholder="Ingrese contraseña">
 			</div>
 			<div class="btn-box">
@@ -36,7 +37,7 @@
 		      
       </div>
       <div class="btn-box">
-        <input class="submit" id="register" type="hidden" value="Registrarse" name="enviar">
+      <!--   <input class="submit" id="register" type="hidden" value="Registrarse" name="enviar"> -->
    </div>
 		</form>
   </div>
@@ -46,6 +47,7 @@
     <a class="icon-footer" href="https//:www.instagram.com"><img class="icon" src="img/instagram.png" alt=""></a>
     <a class="icon-footer" href="https//:www.twitter.com"><img class="icon" src="img/twitter.png" alt=""></a>
   </footer>
+<script src="validacion.js"></script>
 
 </body>
 </html>

@@ -97,8 +97,22 @@ public class DAOCarrito {
 		ps.close();
 		return cantidadLibros;
 	}
+	public void borrarLibro(int id_libro) throws SQLException {
+		PreparedStatement ps = con.prepareStatement("DELETE FROM libreriadb.carrito WHERE id_libro=?");
+		ps.setInt(1, id_libro);
+
+		ps.executeUpdate();
+		ps.close();
+	}
 	
-	
+	public void editarLibro_DAO(int id, int precio) throws SQLException {
+		PreparedStatement ps = con.prepareStatement("UPDATE libreriadb.carrito SET precio= ? WHERE id_libro=?");
+		ps.setInt(1, precio);
+		ps.setInt(2, id);
+
+		ps.executeUpdate();
+		ps.close();
+	}
 	
 	public String listarCarritoJSON(int id_cliente) throws SQLException {
 		Gson gson = new Gson();

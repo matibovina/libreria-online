@@ -34,7 +34,7 @@ public class LoginServ extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		//doPost(request, response);
+		doPost(request, response);
 	}
 
 	/**
@@ -46,7 +46,7 @@ public class LoginServ extends HttpServlet {
 
 		String opcion = request.getParameter("opcion");
 		String mensaje = "";
-
+		System.out.println("VALOR OPCION EN LOG IN" + opcion);
 		if ("1".equals(opcion)) {
 
 			Cookie[] listaCookies = request.getCookies();

@@ -98,13 +98,7 @@ public class DBConnection {
 					+ "		ON DELETE CASCADE\n"
 					+ "		ON UPDATE CASCADE,\n"
 					+ "    FOREIGN KEY (id_libro)\n"
-					+ "    REFERENCES libreriadb.libros (id_libro)"
-					+ "		ON DELETE CASCADE\n"
-					+ "		ON UPDATE CASCADE,"
-					+ "    CONSTRAINT `carrito_ibfk_3` FOREIGN KEY (precio)\n"
-					+ "    REFERENCES libreriadb.libros (precio)"
-					+ "		ON DELETE CASCADE"
-					+ "		ON UPDATE CASCADE);");
+					+ "    REFERENCES libreriadb.libros (id_libro));");
 			ps.executeUpdate();
 			ps.close();
 		}
