@@ -10,6 +10,7 @@
 <head>
 <script src="https://kit.fontawesome.com/3758ab675a.js"
 	crossorigin="anonymous"></script>
+	
 <link rel="stylesheet" href="style.css">
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -17,25 +18,28 @@
 </head>
 <body>
 	<header>
-	<%
-	HttpSession sesion = request.getSession();
-	if (sesion.getAttribute("id_cliente") == null) {
-		response.sendRedirect("login.jsp");
-	}
+<% HttpSession sesion = request.getSession(); %>
+	 	<%
 	
-%>
-<%int id_cliente = (int)sesion.getAttribute("id_cliente"); %>
-	 <input type="hidden" id="id_cliente" value="<%= id_cliente%>">
+	if (sesion.getAttribute("id_cliente") == null || sesion.getAttribute("id_cliente") == "0" ) {
+		response.sendRedirect("login.jsp");
+	} else {
+		int id_cliente = (int)sesion.getAttribute("id_cliente");%>
+		  <input type="hidden" id="id_cliente" value="<%= id_cliente %>">
+	<%}
+	%>
+
+	
+	
+
 		<a href="index.jsp"><img class="logo-nav"
 			src="logo/logo_white_large.png" alt=""></a>
 			
-			<div>
-			<a class="btn2" href="" id="cerrarSesion">Cerrar Sesion</a>
+   			<div>
+			<a class="btn2" href="index.jsp" id="cerrarSesion">Cerrar Sesion</a>
 			</div>
 	</header>
 
-
-	<!-- action="AccionesServ" method="POST" -->
 	<div class="buscar">
 		<input type="hidden" name="opcion" value="6" >
 		<a  id="libroNuevo" class="btn2" href="cargarLibro.jsp">Nuevo Libro</a>
@@ -60,15 +64,16 @@
 
 		
 <div id="resultado"></div>
-
+	<h3 id="resultadoBusqueda"></h3>
 	<table class="table" id="pintarTabla">
 	</table>
 	<button class="btn-cargar" id="atras">Atras</button>
 	<table class="table" id="pintarTablaBuscador">
 	</table>
       <div class="cambioPrecio" id="cambioPrecio">
-      <form class="precioNuevo-form" action="">
+      <form class="precioNuevo-form" id="precioForm" action="">
         <p class="parrafoPrecio">Ingrese el nuevo precio</p>
+        <h4 id="mensajeError"></h4>
         <input type="text" name="precioNuevo" id="precioNuevo">
         <div class="btn-display">
           <input onclick="aceptarCancelar(this)" class="btn2" id="true" type="submit" value="Aceptar">
@@ -85,7 +90,10 @@
 			class="icon-footer" href="https//:www.twitter.com"><img
 			class="icon" src="img/twitter.png" alt=""></a>
 	</footer>
-<script src="pintarTabla.js"></script>
-<script src="cerrarSesion.js"></script>
+	
+		<script src="pintarTabla.js"></script>
+		<script src="cerrarSesion.js"></script>
+		
+
 </body>
 </html>

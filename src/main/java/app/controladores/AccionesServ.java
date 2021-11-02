@@ -59,50 +59,52 @@ public class AccionesServ extends HttpServlet {
 		String id_libro = request.getParameter("id_libro");
 		String precio = request.getParameter("precio");
 		int id_carrito = 0;
-		Carrito carrito = null;
+		Carrito carrito = new Carrito();
 		PrintWriter out = response.getWriter();
-
+		Libro libro = new Libro();
 		try {
 			switch(opcion) {
 			case "1":
-				resultadoJSON = DAOLibro.getInstance().listarIsbnJSON(buscador);
+				resultadoJSON =libro.listarIsbnJSON(buscador);
 				break;
 			case "2":
-				resultadoJSON = DAOLibro.getInstance().listarTituloJSON(buscador);
+				resultadoJSON =libro.listarTituloJSON(buscador);
 				break;
 			case "3":
-				DAOLibro.getInstance().editarLibro_DAO(Integer.parseInt(id_libro), Integer.parseInt(precio));
-				DAOCarrito.getInstance().editarLibro_DAO(Integer.parseInt(id_libro), Integer.parseInt(precio));
+				libro.editarLibro(Integer.parseInt(id_libro), Integer.parseInt(precio));
+				carrito.editarLibro(Integer.parseInt(id_libro), Integer.parseInt(precio));
 			break;
 			case "4":
-				DAOLibro.getInstance().borrarLibro(Integer.parseInt(id_libro));
+				carrito.borrarLibro(Integer.parseInt(id_libro));
 				DAOCarrito.getInstance().borrarLibro(Integer.parseInt(id_libro));
+				libro.borrarLibro(Integer.parseInt(id_libro));
+				DAOLibro.getInstance().borrarLibro(Integer.parseInt(id_libro));
+				
+				
 				break;
 			case "5":
 			case "6":
-				id_carrito = DAOCarrito.getInstance().buscarUltimoIdCarrito();
-				Libro libro = DAOLibro.getInstance().buscarPorIdLibro(Integer.parseInt(id_libro));
-				carrito = new Carrito(id_carrito, id_cliente, Integer.parseInt(id_libro), libro.getTitulo(), libro.getPrecio());
-				DAOCarrito.getInstance().insertarCarrito_DAO(carrito);
+				id_carrito = carrito.buscarUltimoIdCarrito();
 				
-				contadorCarrito = DAOCarrito.getInstance().contadorCarrito(id_cliente);
+				libro = libro.buscarIdLibro(Integer.parseInt(id_libro));
+				carrito = new Carrito(id_carrito, id_cliente, Integer.parseInt(id_libro), libro.getTitulo(), libro.getPrecio());
+				carrito.insertarCarrito(carrito);
+				contadorCarrito = carrito.contadorCarrito(id_cliente);
 				System.out.println("Contador carrito" + contadorCarrito);
 				out.print(contadorCarrito);
 				break;
-			
-//				id_carrito = DAOCarrito.getInstance().buscarUltimoIdCarrito();
-//				Libro libro1 = DAOLibro.getInstance().buscarPorIdLibro(Integer.parseInt(id_libro));
-//				carrito = new Carrito(id_carrito, id_cliente, Integer.parseInt(id_libro), libro1.getTitulo(), libro1.getPrecio());
-//				DAOCarrito.getInstance().insertarCarrito_DAO(carrito);
-//				break;
+
 			}			
 			out.print(resultadoJSON);
 			
 		} catch (ClassNotFoundException e) {
 			// TODO Auto-generated catch block
+			System.err.print("Class Not Found");
 			e.printStackTrace();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
+			System.err.print("SQL Exception");
+
 			e.printStackTrace();
 		}
 	}

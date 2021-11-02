@@ -17,9 +17,10 @@
 		<% if (mensaje!=null){ %>
 			<h4 class="mensaje"><%= mensaje %></h4>
 		<%}%>
-		<h4 id="mensajeError" class="mensajeError">Debe completar todos los campos</h4>
   <div class="form">
-		<form action="ProcesoLogin" id="logIn" name="ProcesoLogin" method="POST" class="fromulario">
+  		 <h3 id="mensajeError" class="mensajeError"></h3>
+  
+		<form action="ProcesoLogin" id="loginForm" name="ProcesoLogin" method="POST" class="fromulario">
 			<label for="user">Usuario</label>
 			<div class="campos-form">
 
@@ -47,7 +48,7 @@
     <a class="icon-footer" href="https//:www.instagram.com"><img class="icon" src="img/instagram.png" alt=""></a>
     <a class="icon-footer" href="https//:www.twitter.com"><img class="icon" src="img/twitter.png" alt=""></a>
   </footer>
-<script src="validacion.js"></script>
+<script src="validacionLogin.js"></script>
 
 </body>
 </html>

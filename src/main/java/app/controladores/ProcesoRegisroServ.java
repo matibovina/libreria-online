@@ -2,14 +2,11 @@ package app.controladores;
 
 import java.io.IOException;
 import java.sql.SQLException;
-
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
-import app.clasesDao.DAOCliente;
 import app.modelo.Cliente;
 
 /**
@@ -62,12 +59,14 @@ public class ProcesoRegisroServ extends HttpServlet {
 				request.setAttribute("mensaje", mensaje);
 				request.getRequestDispatcher("register.jsp").forward(request, response);
 			}
-			else if(DAOCliente.getInstance().booleanUsuario(user)) {
+		//	else if(DAOCliente.getInstance().booleanUsuario(user)) {
+			else if(cliente.booleanUsuario(user)) {
 				System.out.println("Se comprobo usuario");
 				mensaje = "El usuario ya existe. Intente nuevamente";
 				request.setAttribute("mensaje", mensaje);
 				request.getRequestDispatcher("register.jsp").forward(request, response);
-			} else if(DAOCliente.getInstance().booleanEmail(email)) {
+			// else if(DAOCliente.getInstance().booleanEmail(email)) {
+			} else if(cliente.booleanEmail(email)) {
 				System.out.println("Se comprobo mail");
 				mensaje = "El email ya existe en nuestra base de datos. Intente nuevamente";
 				request.setAttribute("mensaje", mensaje);
@@ -79,9 +78,11 @@ public class ProcesoRegisroServ extends HttpServlet {
 				request.getRequestDispatcher("register.jsp").forward(request, response);
 			}
 			else {
-				id_cliente = DAOCliente.getInstance().buscarUltimoId();
+				id_cliente = cliente.buscarUltimoId();
+				//id_cliente = DAOCliente.getInstance().buscarUltimoId();
 				cliente = new Cliente(id_cliente, nombre, apellido, fechanac, email, user, password);
-				DAOCliente.getInstance().insertarCliente_DAO(cliente);
+				cliente.insertarCliente(cliente);
+				//DAOCliente.getInstance().insertarCliente_DAO(cliente);
 				request.getRequestDispatcher("login.jsp").forward(request, response);
 			} 
 

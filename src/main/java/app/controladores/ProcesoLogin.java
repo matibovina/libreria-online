@@ -50,12 +50,13 @@ public class ProcesoLogin extends HttpServlet {
 		String password = request.getParameter("password");
 		String mensaje = "";
 		int userOk = 0;
+		String vista = "";
 		Cliente cliente = new Cliente();
 		try {
-			cliente = DAOCliente.getInstance().buscarPorUsuario(user);
-
-			if (cliente.getUsuario().equals(user)) {
-				if (password.equals(cliente.getPassword())) {
+			
+				if(cliente.booleanUsuario(user)) {
+					cliente  = cliente.buscarPorUsuario(user);
+					if(cliente.booleanPassword(password)) {
 					HttpSession sesion = request.getSession();
 					sesion.setAttribute("user", cliente.getUsuario());
 					sesion.setAttribute("id_cliente", cliente.getId_cliente());
@@ -64,14 +65,16 @@ public class ProcesoLogin extends HttpServlet {
 					cookieUsuario.setMaxAge(30 * 24 * 60 * 60);
 					response.addCookie(cookieUsuario);
 					System.out.print("Verifico usuario y contrasenia");
-					request.getRequestDispatcher("tablaLibros.jsp").forward(request, response);
-				}
-			} else if (!cliente.getUsuario().equals(user) || !cliente.getPassword().equals(password)) {
-				mensaje = "El usuario o la contrasenia son incorrectas o no existe el usuario.";
-				request.setAttribute("userOk", userOk);
-				request.setAttribute("mensaje", mensaje);
-				request.getRequestDispatcher("login.jsp").forward(request, response);
-			}
+					vista = "tablaLibros.jsp";
+					}
+			} else { 
+			mensaje = "El usuario o la contrasenia son incorrectas o no existe el usuario.";
+			request.setAttribute("userOk", userOk);
+			request.setAttribute("mensaje", mensaje);
+			vista = "login.jsp";
+		} 
+			request.getRequestDispatcher(vista).forward(request, response);
+
 		} catch (ClassNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

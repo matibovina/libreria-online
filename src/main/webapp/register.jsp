@@ -18,7 +18,7 @@
 		<% if (mensaje!=null){ %>
 			<h4 class="mensaje"><%= mensaje %></h4>
 		<%}%>
-				<h4 id="mensajeError" class="mensajeError">Debe completar todos los campos</h4>
+				<h4 id="mensajeError"></h4>
 		
   <div class="form" id="register">
 		<form action="ProcesoRegisroServ" name="register" method="POST" class="fromulario">
@@ -37,7 +37,7 @@
 			</div>
 			<div class="campos-form">
         <!-- <label for="user">Email</label> -->
-				<input type="email" name="email" id="email" placeholder="Email">
+				<input type="text" name="email" id="email" placeholder="Email">
 			</div>
 			<div class="campos-form">
         <!-- <label for="user">Usuario</label> -->
@@ -50,7 +50,7 @@
 			</div>
 			<div class="campos-form">
         <!-- <label for="password">Contraseña</label> -->
-				<input type="password" name="password1" id="password"
+				<input type="password" name="password1" id="password1"
 					placeholder="Vuelva a ingresar contraseña">
 			</div>
 			<div class="btn-box">
@@ -67,7 +67,7 @@
     <a class="icon-footer" href="https//:www.instagram.com"><img class="icon" src="img/instagram.png" alt=""></a>
     <a class="icon-footer" href="https//:www.twitter.com"><img class="icon" src="img/twitter.png" alt=""></a>
   </footer>
-<script src="validacion.js"></script>
+   <script src="validacionRegister.js"></script>
 
 </body>
 </html>

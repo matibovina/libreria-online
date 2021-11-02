@@ -26,7 +26,7 @@ function llamadaServidor5() {
 	var destino = "CerrarSesionServ";
 	var numRandom = parseInt(Math.floor(Math.random() * 9999999999999));
 	var miUrl = destino + '?random=' + numRandom + "";
-	llamada5.open("POST", miUrl, true);
+	llamada5.open("POST", miUrl, false);
 	llamada5.onreadystatechange = respuestaServidor5;
 	llamada5.send(null);
 }

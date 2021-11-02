@@ -65,6 +65,6 @@
 			class="icon-footer" href="https//:www.twitter.com"><img
 			class="icon" src="img/twitter.png" alt=""></a>
 	</footer>
-<script src="validacion.js"></script>
+<!-- <script src="validacion.js"></script> -->
 </body>
 </html>

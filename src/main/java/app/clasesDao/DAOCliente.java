@@ -62,6 +62,7 @@ public class DAOCliente {
 		PreparedStatement ps = con.prepareStatement("SELECT * FROM libreriadb.clientes WHERE user= ?");
 		ps.setString(1, usuario);
 		ResultSet result = ps.executeQuery();
+		System.out.println("hace la consulta del usuario en base de datos");
 		Cliente cliente = null;
 		if (result.next()) {
 			if(cliente == null) {
@@ -71,14 +72,29 @@ public class DAOCliente {
 					result.getString("fechanac"), result.getString("email"), result.getString("user"),
 					result.getString("password"));
 			System.out.println(cliente.getEmail() + "este es el email del usuario");
-		}
+		} 
 		result.close();
 		ps.close();
 			
 			return cliente;
 	}
+	public boolean booleanPassword(String password) throws SQLException {
+		PreparedStatement ps = con.prepareStatement("SELECT clientes.user FROM libreriadb.clientes WHERE password= ?");
+		ps.setString(1, password);
+		System.out.println(password + "Este es el password que llega al DAO booleanUsuario");
+		boolean usuarioExiste = false;
+		ResultSet result = ps.executeQuery();
+		if (result.next()) {
+			System.out.println("Encuentra el password en el DAO");
+			usuarioExiste = true;
+			
+		} 
+		result.close();
+		ps.close();
+		return usuarioExiste;
+	}
 	public boolean booleanUsuario(String usuario) throws SQLException {
-		PreparedStatement ps = con.prepareStatement("SELECT * FROM libreriadb.clientes WHERE user= ?");
+		PreparedStatement ps = con.prepareStatement("SELECT clientes.user FROM libreriadb.clientes WHERE user= ?");
 		ps.setString(1, usuario);
 		System.out.println(usuario + "Este es el usuario que llega al DAO booleanUsuario");
 		boolean usuarioExiste = false;
@@ -108,7 +124,7 @@ public class DAOCliente {
 	}
 	
 
-	public Cliente buscarPorPassword(String password) throws SQLException {
+		public Cliente buscarPorPassword(String password) throws SQLException {
 		PreparedStatement ps = con.prepareStatement("SELECT * FROM libreriadb.clientes WHERE password= ?");
 		ps.setString(1, password);
 		ResultSet result = ps.executeQuery();

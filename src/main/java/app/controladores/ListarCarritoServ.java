@@ -11,8 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import app.clasesDao.DAOCarrito;
-import app.clasesDao.DAOLibro;
+import app.modelo.Carrito;
 
 /**
  * Servlet implementation class ListarCarritoServ
@@ -57,14 +56,17 @@ public class ListarCarritoServ extends HttpServlet {
 	protected void accionesCarrito(HttpServletRequest request, HttpServletResponse response) throws ClassNotFoundException, SQLException, IOException {
 		String listaJSON = "";
 		String opcion = request.getParameter("opcion"); 
+		Carrito carrito = new Carrito();
 		HttpSession sesion = request.getSession();
 		int id_cliente = Integer.parseInt((sesion.getAttribute("id_cliente").toString()));
 		String id_libro = request.getParameter("id_libro");
 		if("1".equals(opcion)) {
-			DAOCarrito.getInstance().borrarItemCarrito(Integer.parseInt(id_libro), id_cliente);
+			carrito.borrarItemCarrito(Integer.parseInt(id_libro), id_cliente);
+			//DAOCarrito.getInstance().borrarItemCarrito(Integer.parseInt(id_libro), id_cliente);
 		
 		}
-		listaJSON = DAOCarrito.getInstance().listarCarritoJSON(id_cliente);
+		listaJSON = carrito.listarCarritoJSON(id_cliente);
+		//listaJSON = DAOCarrito.getInstance().listarCarritoJSON(id_cliente);
 		
 		
 		PrintWriter out = response.getWriter();

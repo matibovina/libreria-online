@@ -31,7 +31,7 @@ public class CerrarSesionServ extends HttpServlet {
 		HttpSession sesion = request.getSession();
 		sesion.invalidate();
 		System.out.println("llega a cierre sesion");
-		response.sendRedirect("login.jsp");
+		request.getRequestDispatcher("index.jsp").forward(request, response);
 	}
 
 	/**
@@ -43,7 +43,7 @@ public class CerrarSesionServ extends HttpServlet {
 		HttpSession sesion = request.getSession();
 		sesion.invalidate();
 		System.out.println("llega a cierre sesion");
-		response.sendRedirect("login.jsp");
+		request.getRequestDispatcher("index.jsp").forward(request, response);
 	}
 
 }

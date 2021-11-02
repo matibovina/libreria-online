@@ -42,6 +42,7 @@
   <input type="text" name="ciudad" placeholder="Ciudad" required>
   <input type="submit" class="submit" value="Pagar">
 </form>
+ <a href="carrito.jsp" class="btn2">Atras</a>   
 </div>
 </section>
 <div id="confirmacionCompra" class="confirmacionCompra">

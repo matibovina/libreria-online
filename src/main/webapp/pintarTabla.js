@@ -16,6 +16,7 @@ var button = "";
 var carrito = document.querySelector("#cantidadCarrito");
 var contadorCarrito = 0;
 var id_cliente = document.querySelector("#id_cliente");
+var regexPrecio = /[0-9]/g
 
 function aceptarCancelar(id_boton) {
 	dialogoPrecio = id_boton.id;
@@ -117,6 +118,7 @@ formulario.addEventListener("submit", function(e) {
 function llamadaServidorBuscador() {
 	buscador = "&buscador=" + valorBusqueda.value;
 	var destino = "AccionesServ";
+	console.log("intenta hacer la llamada");
 	if (selectedItem.value == 1 && valorBusqueda.value.length != 0) {
 		optionUrl = "&opcion=1";
 	} else if (selectedItem.value == 2 && valorBusqueda.value.length != 0) {
@@ -138,11 +140,7 @@ function respuestaServidorBuscador() {
 			resultadoBusqueda = llamada2.responseText;
 			resultadoBusquedaJSON = JSON.parse(resultadoBusqueda);
 
-			/*	document.getElementById('resultado').innerHTML = resultadoBusqueda; */
 			if (resultadoBusquedaJSON.length != 0) {
-
-
-				tablaCompleta.style.display = "none";
 
 				var row = "<tr>" +
 					" <th>ID</th>" +
@@ -171,7 +169,9 @@ function respuestaServidorBuscador() {
 						"<button id=\"4\" class=\"actions\" type=\"submit\" onclick=\"obtenerIdLibro(" + resultadoBusquedaJSON[i].id_libro + ",this)\"><a href=\"carrito.jsp\" class=\"actions\"><i class=\"fas fa-credit-card\"></i></a></button>" +
 						"</td></tr>"
 				}
-
+				
+				tablaCompleta.style.display = "none";
+				document.querySelector("#resultadoBusqueda").innerHTML = "Se encontraron  " + resultadoBusquedaJSON.length + " libros que coinciden";
 				document.getElementById('pintarTablaBuscador').style.display = "block";
 				document.getElementById('pintarTablaBuscador').innerHTML = row;
 				botonAtras.style.display = "block";
@@ -186,6 +186,7 @@ botonAtras.addEventListener("click", function() {
 	tablaCompleta.style.display = "block";
 	document.getElementById('pintarTablaBuscador').style.display = "none";
 	botonAtras.style.display = "none";
+	document.querySelector("#resultadoBusqueda").innerHTML = "";
 })
 
 var llamadaAcciones = getXMLHTTPRequest();
@@ -197,8 +198,20 @@ function obtenerIdLibro(idLibro, btn) {
 		formPrecio.style.display = "flex";
 		document.querySelector(".precioNuevo-form").addEventListener("submit", function(e) {
 			e.preventDefault()
+			inputPrecio = document.querySelector("#precioNuevo");
 			if (dialogoPrecio == "true") {
-				inputPrecio = document.querySelector("#precioNuevo");
+				if(inputPrecio.value.length == 0 ){				
+			e.preventDefault()
+			mensajeError.innerHTML = "El precio debe ser un numero mayor a 0"
+			console.log("si estan vacion")
+	}
+	else if(regexPrecio.test(inputPrecio.value)){
+			
+			precioNuevo = "&precio=" + inputPrecio.value;
+				formPrecio.style.display = "none";
+				llamadaServidorAcciones()
+		} 
+				
 				precioNuevo = "&precio=" + inputPrecio.value;
 				formPrecio.style.display = "none";
 				llamadaServidorAcciones()

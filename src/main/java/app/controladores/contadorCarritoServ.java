@@ -10,8 +10,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-
-import app.clasesDao.DAOCarrito;
+import app.modelo.Carrito;
 
 /**
  * Servlet implementation class contadorCarritoServ
@@ -43,10 +42,11 @@ public class contadorCarritoServ extends HttpServlet {
 		// TODO Auto-generated method stub
 		HttpSession sesion = request.getSession();
 		int id_cliente = Integer.parseInt((sesion.getAttribute("id_cliente").toString())) ;
-		
+		Carrito carrito = new Carrito();
 		int contadorCarrito = 0;
 		try {
-			contadorCarrito = DAOCarrito.getInstance().contadorCarrito(id_cliente);
+			contadorCarrito = carrito.contadorCarrito(id_cliente);
+			//contadorCarrito = DAOCarrito.getInstance().contadorCarrito(id_cliente);
 		} catch (ClassNotFoundException | SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
