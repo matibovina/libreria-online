@@ -1,9 +1,7 @@
 package app.controladores;
 
 import java.io.IOException;
-import java.math.BigDecimal;
 import java.sql.SQLException;
-import java.text.DecimalFormat;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -11,7 +9,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import app.clasesDao.DAOLibro;
 import app.modelo.Libro;
 
 /**
@@ -54,7 +51,7 @@ public class ProcesoNuevoLibroServ extends HttpServlet {
 	//SERVIDOR PARA DAR DE ALTA UN NUEVO LIBRO 
 	protected void nuevoLibro(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, SQLException, ClassNotFoundException{
 		
-		String opcion = request.getParameter("opcion");
+		//String opcion = request.getParameter("opcion");
 		Libro libro = new Libro();
 		int id_libro = 0;
 		String mensaje = "";
@@ -62,7 +59,7 @@ public class ProcesoNuevoLibroServ extends HttpServlet {
 		String autor = request.getParameter("autor");
 		String isbn = request.getParameter("ISBN");
 		String genero = request.getParameter("genero");
-		int precio = Integer.parseInt(request.getParameter("precio"));
+		double precio = Double.parseDouble(request.getParameter("precio"));
 		if(libro.validarISBN(isbn) || libro.validarTitulo(titulo)) { //COMPRUEBA QUE ISBN Y TITULO NO EXISTAN 
 			System.out.println("prueba de entrada mismo isbn");
 			mensaje = "Ya existe un libro con ese titulo o ISBN";

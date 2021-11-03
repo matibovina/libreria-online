@@ -56,7 +56,6 @@
 				<option value="2">Titulo</option>
 			</select>  
 			<input type="text" name="buscador" id="valorBuscar">  
-		<!-- 	 	<input type="hidden" name="opcion" value="1">  -->
 			<input class="btn2" type="submit"  value="Buscar">
 		</form> 
 		</div>

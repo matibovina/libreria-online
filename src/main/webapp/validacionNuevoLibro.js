@@ -4,13 +4,13 @@
 formLibroNuevo.addEventListener("submit", function(e){
 	let usuarioRegex = /\s/g
 	let mensajeError = document.querySelector("#mensajeError");
-	let regexPrecio = /^[0-9]+$/gm
+	let regexPrecio = /^[0-9]+([.][0-9]{2})?$/gm
 	let titulo = document.querySelector('#titulo');
 	let autor = document.querySelector('#autor');
 	let genero = document.querySelector('#genero');
 	let precio = document.querySelector('#precio');
 	let isbnValue = ""
-	let isbnRegex = /^[0-9]{3}[\-][0-9]{3}?$/gm
+	let isbnRegex =  /^[0-9]{3}[\-][0-9]{3}?$/gm
 	mensajeError.innerHTML = "";
 	let isbn = document.getElementById('isbn');
 	isbnValue = isbn.value

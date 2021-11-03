@@ -48,7 +48,7 @@ public class DAOLibro {
 
 		if (result.next()) {
 			libro = new Libro(result.getInt("id_libro"), result.getString("titulo"), result.getString("autor"),
-					result.getString("isbn"), result.getInt("precio"), result.getString("genero"));
+					result.getString("isbn"), result.getDouble("precio"), result.getString("genero"));
 
 		}
 		result.close();
@@ -62,7 +62,7 @@ public class DAOLibro {
 		ps.setString(2, libro.getTitulo());
 		ps.setString(3, libro.getAutor());
 		ps.setString(4, libro.getISBN());
-		ps.setInt(5, libro.getPrecio());
+		ps.setDouble(5, libro.getPrecio());
 		ps.setString(6, libro.getGenero());
 
 		ps.executeUpdate();
@@ -99,9 +99,9 @@ public class DAOLibro {
 		return isbnExiste;
 	}
 
-	public void editarLibro_DAO(int id, int precio) throws SQLException {
+	public void editarLibro_DAO(int id, double precio) throws SQLException {
 		PreparedStatement ps = con.prepareStatement("UPDATE libreriadb.libros SET precio= ? WHERE id_libro=?");
-		ps.setInt(1, precio);
+		ps.setDouble(1, precio);
 		ps.setInt(2, id);
 
 		ps.executeUpdate();
@@ -118,7 +118,7 @@ public class DAOLibro {
 				listaLibros = new ArrayList<Libro>();
 			}
 			listaLibros.add(new Libro(result.getInt("id_libro"), result.getString("titulo"), result.getString("autor"),
-					result.getString("isbn"), result.getInt("precio"), result.getString("genero")));
+					result.getString("isbn"), result.getDouble("precio"), result.getString("genero")));
 		}
 		result.close();
 		ps.close();

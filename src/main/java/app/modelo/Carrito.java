@@ -9,11 +9,11 @@ public class Carrito{
 	private int id_cliente;
 	private int id_libro;
 	private String titulo;
-	private int precio;
+	private double precio;
 
 	
 	
-	public Carrito(int id_carrito, int id_cliente, int id_libro, String titulo, int precio) {
+	public Carrito(int id_carrito, int id_cliente, int id_libro, String titulo, double precio) {
 		this.id_carrito = id_carrito;
 		this.id_cliente = id_cliente;
 		this.id_libro = id_libro;
@@ -55,11 +55,11 @@ public class Carrito{
 		this.titulo = titulo;
 	}
 
-	public int getPrecio() {
+	public double getPrecio() {
 		return precio;
 	}
 
-	public void setPrecio(int precio) {
+	public void setPrecio(double precio) {
 		this.precio = precio;
 	}
 
@@ -91,7 +91,7 @@ public class Carrito{
 		DAOCarrito.getInstance().borrarLibro(id_libro);
 	}
 	
-	public void editarLibro(int id, int precio) throws SQLException, ClassNotFoundException {
+	public void editarLibro(int id, double precio) throws SQLException, ClassNotFoundException {
 		DAOCarrito.getInstance().editarLibro_DAO(id, precio);
 	}
 	

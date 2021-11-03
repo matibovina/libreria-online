@@ -71,8 +71,8 @@ public class AccionesServ extends HttpServlet {
 				resultadoJSON =libro.listarTituloJSON(buscador); // SI LA OPCION ES 2 BUSCA POR TITULO
 				break;
 			case "3": //SI LA OPCION ES EDITA EL PRECIO DEL LIBRO
-				libro.editarLibro(Integer.parseInt(id_libro), Integer.parseInt(precio));
-				carrito.editarLibro(Integer.parseInt(id_libro), Integer.parseInt(precio));
+				libro.editarLibro(Integer.parseInt(id_libro), Double.parseDouble(precio));
+				carrito.editarLibro(Integer.parseInt(id_libro), Double.parseDouble(precio));
 			break;
 			case "4": //SI LA OPCION ES 4 BORRA EL LIBRO
 				carrito.borrarLibro(Integer.parseInt(id_libro));

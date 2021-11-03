@@ -49,7 +49,7 @@ public class DAOCarrito {
 		ps.setInt(2, carrito.getId_cliente());
 		ps.setInt(3, carrito.getId_libro());
 		ps.setString(4, carrito.getTitulo());
-		ps.setInt(5, carrito.getPrecio());
+		ps.setDouble(5, carrito.getPrecio());
 		ps.executeUpdate();
 		ps.close();
 	}
@@ -65,7 +65,7 @@ public class DAOCarrito {
 				listaLibros = new ArrayList<Carrito>();
 			}
 			listaLibros.add(
-					new Carrito(result.getInt("id_carrito"), result.getInt("id_cliente"), result.getInt("id_libro"), result.getString("titulo"), result.getInt("precio")));
+					new Carrito(result.getInt("id_carrito"), result.getInt("id_cliente"), result.getInt("id_libro"), result.getString("titulo"), result.getDouble("precio")));
 		}
 		result.close();
 		ps.close();
@@ -105,9 +105,9 @@ public class DAOCarrito {
 		ps.close();
 	}
 	
-	public void editarLibro_DAO(int id, int precio) throws SQLException {
+	public void editarLibro_DAO(int id, double precio) throws SQLException {
 		PreparedStatement ps = con.prepareStatement("UPDATE libreriadb.carrito SET precio= ? WHERE id_libro=?");
-		ps.setInt(1, precio);
+		ps.setDouble(1, precio);
 		ps.setInt(2, id);
 
 		ps.executeUpdate();

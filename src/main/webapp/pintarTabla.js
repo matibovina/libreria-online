@@ -18,7 +18,7 @@ var button = "";
 var carrito = document.querySelector("#cantidadCarrito");
 var contadorCarrito = 0;
 var id_cliente = document.querySelector("#id_cliente");
-var regexPrecio = /^[0-9]+$/gm
+var regexPrecio =   /^[0-9]+([.][0-9]{2})?$/gm
 var mensajeError = ""
 
 

@@ -10,10 +10,10 @@ public class Libro {
 	private String titulo;
 	private String autor;
 	private String genero;
-	private int precio;
+	private double precio;
 	private String ISBN;
 
-	public Libro(int id_libro, String titulo, String autor, String ISBN, int precio, String genero) {
+	public Libro(int id_libro, String titulo, String autor, String ISBN, double precio, String genero) {
 		this.id_libro = id_libro;
 		this.titulo = titulo;
 		this.autor = autor;
@@ -59,11 +59,11 @@ public class Libro {
 		this.genero = genero;
 	}
 
-	public int getPrecio() {
+	public double getPrecio() {
 		return precio;
 	}
 
-	public void setPrecio(int precio) {
+	public void setPrecio(double precio) {
 		this.precio = precio;
 	}
 
@@ -93,7 +93,7 @@ public class Libro {
 		return DAOLibro.getInstance().validarISBN(isbn);
 	}
 
-	public void editarLibro(int id, int precio) throws SQLException, ClassNotFoundException {
+	public void editarLibro(int id, double precio) throws SQLException, ClassNotFoundException {
 		DAOLibro.getInstance().editarLibro_DAO(id, precio);
 	}
 
