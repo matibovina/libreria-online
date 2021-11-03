@@ -1,0 +1,68 @@
+El proyecto necesita los siguientes .jar files( estan en la carpeta del proyecto todos):
+
+1) mysql-connector-java-8.0.26.jar
+2) gson-2.8.2.jar
+3) tomcat-api.jar
+4) servlet-api.jar
+
+Se incluye el file mysql con la base de datos ya creada. 
+
+El proyecto consiste en una libreria online donde el cliente puede
+comprar libros que esten disponibles. 
+
+El usuario admin tiene acceso a:
+- nombre de usuario: admin
+- password: 1321
+
+1) Crear Nuevo Libro
+2) Modificar Precio de un Libro existente
+3) Eliminar un Libro existente
+
+El cliente solo puede agregar al carrito o comprar.
+
+Todas las acciones de la tabla libros suceden de forma asincrona salvo
+el boton comprar que redirije al carrito.
+
+Se pueden dar de alta nuevos usuarios o hacer log in los usuarios existentes. 
+
+------MODELO--------
+Clases Modelo:
+- Cliente 
+- Libro
+- Carrito
+
+Clases DAO:
+- DAOCliente
+- DAOLibro
+- DAOCarrito
+
+
+------CONTROLADORES-------
+
+Servlets:
+- LoginServ (busca cookies y redirije a login.jsp o register.jsp)
+- ProcesoLogin (verifica que el usuario exita, crea sesion, crea cookies, redirije a tablaLibros.jsp)
+- ProcesoRegistroServ (procesa el registro de usuario nuevo)
+- ListarLibrosServ (lista la tabla inicial con todos los libros cargados)
+- AccionesServ (maneja todas las acciones de la tabla libros [editar, borrar, carrito y comprar] y el buscador de libros)
+- ContadorCarritoServ (maneja el contador de libros del carrito)
+- CerrarSesionServ (se utiliza para finalizar la sesion)
+- ListarCarritoServ (envia la informacion de la tabla carrito hacia el ajax)
+- ProcesoNuevoLibroServ (servlet para el ingreso de nuevos libros)
+
+-----VISTA-------
+JSP:
+- index.jsp (botones log in y register)
+- login.jsp (formulario log in)
+- register.jsp (formulario registro)
+- cargarLibro.jsp (formulario para cargar libro nuevo)
+- tablaLibros.jsp (muestra las tablas, opcion buscar, acciones libros)
+- carrito.jsp (lista libros en tabla carrito, proceso de compra {**EL FORMULARIO DE COMPRA ESTA COMPLETADO POR FINES PRACTICOS DE PRUEBAS**})
+
+Javascript:
+- files validacion (cada uno para validad formularios de las distintas paginas)
+- pintarTabla.js (maneja todas las acciones de forma asincrona de tablaLibros.jsp)
+- carrito_app.js (maneja todas las acciones de la pagina carrito, algunas asincronas)
+
+ 
+

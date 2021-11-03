@@ -38,28 +38,24 @@ public class ProcesoLogin extends HttpServlet {
 			throws ServletException, IOException {
 		// TODO Auto-generated method stub
 	}
-
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
-	 *      response)
-	 */
+	
+	//SERVIDOR PARA PROCESAR EL LOG IN DEL USUARIO
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 
 		String user = request.getParameter("user");
 		String password = request.getParameter("password");
 		String mensaje = "";
-		int userOk = 0;
 		String vista = "";
 		Cliente cliente = new Cliente();
 		try {
 			
-				if(cliente.booleanUsuario(user)) {
+				if(cliente.booleanUsuario(user)) { //SI EL USUARIO EXISTE CREA INSTANCIA DE CLIENTE
 					cliente  = cliente.buscarPorUsuario(user);
 					if(cliente.booleanPassword(password)) {
 					HttpSession sesion = request.getSession();
 					sesion.setAttribute("user", cliente.getUsuario());
-					sesion.setAttribute("id_cliente", cliente.getId_cliente());
+					sesion.setAttribute("id_cliente", cliente.getId_cliente()); //GUARDA VALORES COMO ATRIBUTE DE LA SESION
 					request.setAttribute("cliente", cliente);
 					Cookie cookieUsuario = new Cookie("user", user);
 					cookieUsuario.setMaxAge(30 * 24 * 60 * 60);
@@ -69,7 +65,6 @@ public class ProcesoLogin extends HttpServlet {
 					}
 			} else { 
 			mensaje = "El usuario o la contrasenia son incorrectas o no existe el usuario.";
-			request.setAttribute("userOk", userOk);
 			request.setAttribute("mensaje", mensaje);
 			vista = "login.jsp";
 		} 

@@ -1,14 +1,13 @@
 /* VALIDACION DE FORMULARIO - CONTACTO */
 let register = document.querySelector("#register");
-let mensajeError = document.querySelector("#mensajeError");
-let emailRegex = /^[-\w.%+]{1,64}@(?:[A-Z0-9-]{1,63}\.){1,125}[A-Z]{2,63}$/gmi;
-let passwordRegex = /[0-9]{4,}/
-let userRegex = /^[a-z0-9]+$/gm;
 
 
 register.addEventListener("submit", function(e){
 
-
+let mensajeError = document.querySelector("#mensajeError");
+let emailRegex = /^[-\w.%+]{1,64}@(?:[A-Z0-9-]{1,63}\.){1,125}[A-Z]{2,63}$/gmi;
+let passwordRegex = /[0-9]{4,}/
+let userRegex = /^[a-z0-9]+$/gm;
 let nombre = document.querySelector('#nombre');
 let apellido = document.querySelector('#apellido');
 let fecha = document.querySelector('#fechaNamicimiento');
@@ -20,21 +19,19 @@ let password1 = document.querySelector('#password1');
 	if(nombre.value.length == 0 || apellido.value.length == 0 || fecha.value.length == 0 || email.value.length == 0 || user.value.length == 0 || password.value.length == 0 || password1.value.length == 0){
 		e.preventDefault()
 		mensajeError.innerHTML = "Los campos no pueden estar vacios en javascript"
-	}
-	 if(!emailRegex.test(email.value)){
+	} else if(!emailRegex.test(email.value)){
 			
 			e.preventDefault()
 			mensajeError.innerHTML = "El formato de email es incorrecto - \"usuario@email.com\""
 	
 			console.log("si el email es incorrecto")
-		} 
-		if(!userRegex.test(user.value)){
+		} else if(!userRegex.test(user.value)){
 			e.preventDefault()
 			mensajeError.innerHTML = "El usuario debe contener letras minusculas y numeros"
-		} if(!passwordRegex.test(password.value)){
+		} else if(!passwordRegex.test(password.value)){
 			e.preventDefault()
 			mensajeError.innerHTML = "La password debe contener 4digitos no secuenciales o consecutivos"
-		} if(password1.value != password.value){
+		} else if(password1.value != password.value){
 			e.preventDefault()
 			mensajeError.innerHTML = "Las password no coinciden."
 		} 

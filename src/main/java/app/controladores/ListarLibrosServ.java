@@ -60,14 +60,13 @@ public class ListarLibrosServ extends HttpServlet {
 		}
 
 	}
-	
+	//SERVIDOR PARA LISTAR TODOS LOS LIBROS EXISTENTES
 	protected void listarLibros(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException, ClassNotFoundException, SQLException {
 		String listaJSON = "";
 		HttpSession sesion = request.getSession();
 		int id_cliente = Integer.parseInt((sesion.getAttribute("id_cliente").toString()));
 		
-		//listaJSON = DAOLibro.getInstance().listaLibrosJSON();
 		listaJSON = Libro.listaLibrosJSON();
 		PrintWriter out = response.getWriter();
 		out.print(listaJSON);

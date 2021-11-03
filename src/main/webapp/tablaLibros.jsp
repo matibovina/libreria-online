@@ -32,14 +32,14 @@
 	
 	
 
-		<a href="index.jsp"><img class="logo-nav"
+		<a href="#"><img class="logo-nav"
 			src="logo/logo_white_large.png" alt=""></a>
 			
    			<div>
 			<a class="btn2" href="index.jsp" id="cerrarSesion">Cerrar Sesion</a>
 			</div>
 	</header>
-
+ <section class="mainSection">
 	<div class="buscar">
 		<input type="hidden" name="opcion" value="6" >
 		<a  id="libroNuevo" class="btn2" href="cargarLibro.jsp">Nuevo Libro</a>
@@ -82,14 +82,12 @@
       </form>
     </div>
 	</section>
-	<footer>
-		<a class="icon-footer" href="https//:www.facebook.com"><img
-			class="icon" src="img/facebook.png" alt=""></a> <a
-			class="icon-footer" href="https//:www.instagram.com"><img
-			class="icon" src="img/instagram.png" alt=""></a> <a
-			class="icon-footer" href="https//:www.twitter.com"><img
-			class="icon" src="img/twitter.png" alt=""></a>
-	</footer>
+	</section>
+  <footer>
+    <a class="icon-footer" href="https//:www.facebook.com"><i class="fab fa-facebook"></i></a>
+    <a class="icon-footer" href="https//:www.instagram.com"><i class="fab fa-instagram-square"></i></a>
+    <a class="icon-footer" href="https//:www.twitter.com"><i class="fab fa-twitter"></i></a>
+  </footer>
 	
 		<script src="pintarTabla.js"></script>
 		<script src="cerrarSesion.js"></script>

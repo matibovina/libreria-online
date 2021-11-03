@@ -32,10 +32,8 @@ public class ProcesoRegisroServ extends HttpServlet {
 		response.getWriter().append("Served at: ").append(request.getContextPath());
 	}
 
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
-	 */
 
+	// SERVIDOR PARA EL REGISTRO DE NUEVOS USUARIOS
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		Cliente cliente = new Cliente();
@@ -53,36 +51,27 @@ public class ProcesoRegisroServ extends HttpServlet {
 		
 		
 		try {
-			if(nombre.length() == 0|| apellido.length() == 0 || fechanac.length() == 0 || email.length() == 0 || user.length() == 0 || password.length() == 0|| password1.length() == 0) {
-				mensaje = "Los campos no pueden estar vacios.";
-				System.out.println(mensaje);
-				request.setAttribute("mensaje", mensaje);
-				request.getRequestDispatcher("register.jsp").forward(request, response);
-			}
-		//	else if(DAOCliente.getInstance().booleanUsuario(user)) {
-			else if(cliente.booleanUsuario(user)) {
+			//COMPRUEBA QUE EL USUARIO NO EXISTA 
+				if(cliente.booleanUsuario(user)) { //SI EXISTE DEVUELVE UN MENSAJE
 				System.out.println("Se comprobo usuario");
 				mensaje = "El usuario ya existe. Intente nuevamente";
 				request.setAttribute("mensaje", mensaje);
 				request.getRequestDispatcher("register.jsp").forward(request, response);
-			// else if(DAOCliente.getInstance().booleanEmail(email)) {
-			} else if(cliente.booleanEmail(email)) {
+			} else if(cliente.booleanEmail(email)) { //SI EL EMAIL YA EXISTE DEVUELVE MENSAJE
 				System.out.println("Se comprobo mail");
 				mensaje = "El email ya existe en nuestra base de datos. Intente nuevamente";
 				request.setAttribute("mensaje", mensaje);
 				request.getRequestDispatcher("register.jsp").forward(request, response);
-			} else if(!password.equals(password1)) {
+			} else if(!password.equals(password1)) { //SI LAS PASSWORDS NO COINCIDEN DEVUELVE MENSAJE
 				System.out.println("Se comprobo contrasenia");
 				mensaje = "Las password no coinciden.";
 				request.setAttribute("mensaje", mensaje);
 				request.getRequestDispatcher("register.jsp").forward(request, response);
 			}
-			else {
+			else { //SI TODO ESTA BIEN CREA EL USUARIO NUEVO Y REDIRIJE A LOGIN 
 				id_cliente = cliente.buscarUltimoId();
-				//id_cliente = DAOCliente.getInstance().buscarUltimoId();
 				cliente = new Cliente(id_cliente, nombre, apellido, fechanac, email, user, password);
 				cliente.insertarCliente(cliente);
-				//DAOCliente.getInstance().insertarCliente_DAO(cliente);
 				request.getRequestDispatcher("login.jsp").forward(request, response);
 			} 
 

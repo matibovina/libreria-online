@@ -1,3 +1,5 @@
+
+
 var llamada2 = getXMLHTTPRequest();
 var formulario = document.querySelector("#buscarBtn");
 var selectedItem = document.getElementById("selector");
@@ -16,16 +18,16 @@ var button = "";
 var carrito = document.querySelector("#cantidadCarrito");
 var contadorCarrito = 0;
 var id_cliente = document.querySelector("#id_cliente");
-var regexPrecio = /[0-9]/g
+var regexPrecio = /^[0-9]+$/gm
+var mensajeError = ""
 
-function aceptarCancelar(id_boton) {
-	dialogoPrecio = id_boton.id;
-}
 
-console.log(id_cliente.value + "este es el id del cliente");
+//FUNCION QUE SEGUN EL ID DEL USUARIO DEFINE LOS ACCESOS
 function rolUsuario() {
 	var botonEditar = document.querySelectorAll(".editar");
 	var botonBorrar = document.querySelectorAll(".borrar");
+	var botonCarrito = document.querySelectorAll(".carrito");
+	var botonComprar = document.querySelectorAll(".comprar");
 	var botonLibroNuevo = document.querySelector("#libroNuevo");
 	var thRol = document.querySelector("#thRol");
 	if (id_cliente.value != 1) {
@@ -38,6 +40,8 @@ function rolUsuario() {
 		}
 	}
 }
+
+
 
 function getXMLHTTPRequest() {
 	try {
@@ -55,7 +59,7 @@ function getXMLHTTPRequest() {
 	}
 	return req;
 }
-
+//LLAMADA AL SERVIDOR PARA TRAER LA TABLA LIBROS COMPLETA
 var llamada = getXMLHTTPRequest();
 function llamadaServidor() {
 
@@ -96,9 +100,9 @@ function respuestaServidor() {
 					"<input type=\"hidden\" name=\"opcion\" value=\"4\">" +
 					"<button id=\"2\" class=\"actions borrar\" type=\"submit\" onclick=\"obtenerIdLibro(" + listaLibrosJSON[i].id_libro + ",this)\"><i class=\"borrar fas fa-trash-alt\"></i></button>" +
 					"<input type=\"hidden\" name=\"opcion\" value=\"5\">" +
-					"<button id=\"3\" class=\"actions\" type=\"submit\" onclick=\"obtenerIdLibro(" + listaLibrosJSON[i].id_libro + ",this)\"><i class=\"fas fa-cart-plus\"></i></button>" +
+					"<button id=\"3\" class=\"actions carrito\" type=\"submit\" onclick=\"obtenerIdLibro(" + listaLibrosJSON[i].id_libro + ",this)\"><i class=\"fas fa-cart-plus\"></i></button>" +
 					"<input type=\"hidden\" name=\"opcion\" value=\"6\">" +
-					"<button id=\"4\" class=\"actions\" type=\"submit\" onclick=\"obtenerIdLibro(" + listaLibrosJSON[i].id_libro + ",this)\"><a href=\"carrito.jsp\" class=\"actions\"><i class=\"fas fa-credit-card\"></i></a></button>" +
+					"<button id=\"4\" class=\"actions comprar\" type=\"submit\" onclick=\"obtenerIdLibro(" + listaLibrosJSON[i].id_libro + ",this)\"><a href=\"carrito.jsp\" class=\"actions\"><i class=\"fas fa-credit-card\"></i></a></button>" +
 					"</td></tr>"
 			}
 
@@ -107,14 +111,19 @@ function respuestaServidor() {
 		}
 	}
 }
-
 botonAtras.style.display = "none";
+// FUNCION PARA UTILIZAR EL BUSCADOR POR TITULO O ISBN
 formulario.addEventListener("submit", function(e) {
 	e.preventDefault();
-
-	llamadaServidorBuscador();
+	if(selectedItem.value == 0 && valorBusqueda.value.length == 0){
+		e.preventDefault();
+	} else {
+		llamadaServidorBuscador();
+	}
+	
 })
-
+// LLAMADA AJAX AL SERVIDOR PARA OBTENER LOS VALORES SEGUN LA BUSQUEDA REALIZADA
+//PINTA UNA NUEVA TABLA CON EL RESULTADO DE LA BUSQUEDA Y ESCONDE LA TABLA COMPLETA DE LIBROS
 function llamadaServidorBuscador() {
 	buscador = "&buscador=" + valorBusqueda.value;
 	var destino = "AccionesServ";
@@ -164,9 +173,9 @@ function respuestaServidorBuscador() {
 						"<input type=\"hidden\" name=\"opcion\" value=\"4\">" +
 						"<button id=\"2\" class=\"actions\" type=\"submit\" onclick=\"obtenerIdLibro(" + resultadoBusquedaJSON[i].id_libro + ",this)\"><i class=\"borrar fas fa-trash-alt\"></i></button>" +
 						"<input type=\"hidden\" name=\"opcion\" value=\"5\">" +
-						"<button id=\"3\" class=\"actions\" type=\"submit\" onclick=\"obtenerIdLibro(" + resultadoBusquedaJSON[i].id_libro + ",this)\"><i class=\"fas fa-cart-plus\"></i></button>" +
+						"<button id=\"3\" class=\"actions carrito\" type=\"submit\" onclick=\"obtenerIdLibro(" + resultadoBusquedaJSON[i].id_libro + ",this)\"><i class=\"fas fa-cart-plus\"></i></button>" +
 						"<input type=\"hidden\" name=\"opcion\" value=\"6\">" +
-						"<button id=\"4\" class=\"actions\" type=\"submit\" onclick=\"obtenerIdLibro(" + resultadoBusquedaJSON[i].id_libro + ",this)\"><a href=\"carrito.jsp\" class=\"actions\"><i class=\"fas fa-credit-card\"></i></a></button>" +
+						"<button id=\"4\" class=\"actions comprar\" type=\"submit\" onclick=\"obtenerIdLibro(" + resultadoBusquedaJSON[i].id_libro + ",this)\"><a href=\"carrito.jsp\" class=\"actions\"><i class=\"fas fa-credit-card\"></i></a></button>" +
 						"</td></tr>"
 				}
 				
@@ -182,41 +191,50 @@ function respuestaServidorBuscador() {
 	}
 }
 
+//FUNCION PARA OBTENER EL ID DEL BOTON DEL FORMULARIO DE CAMBIAR PRECIO
+function aceptarCancelar(id_boton) {
+	dialogoPrecio = id_boton.id;
+}
+//FUNCION PARA EL BOTON ATRAS - ESCONDE LA TABLA BUSQUEDA Y MUESTRA LA TABLA COMPLETA
 botonAtras.addEventListener("click", function() {
 	tablaCompleta.style.display = "block";
 	document.getElementById('pintarTablaBuscador').style.display = "none";
 	botonAtras.style.display = "none";
 	document.querySelector("#resultadoBusqueda").innerHTML = "";
+	selectedItem.value = 0 
+	valorBusqueda.value = ""
 })
-
 var llamadaAcciones = getXMLHTTPRequest();
+//FUNCION PARA OBTENER EL ID DEL LIBRO DE LA FILA Y LA ACCION SELECCIONADAS
 function obtenerIdLibro(idLibro, btn) {
 	id_libro = idLibro
 	button = btn.id
+	mensajeError = document.querySelector("#mensajeError");
+	mensajeError.innerHTML = ""
+	//SI EL BOTON ES 1 - EDITAR
 	if (button == "1") {
-		formPrecio = document.querySelector(".cambioPrecio");
-		formPrecio.style.display = "flex";
-		document.querySelector(".precioNuevo-form").addEventListener("submit", function(e) {
+		formPrecioBox = document.querySelector(".cambioPrecio");
+		formPrecioBox.style.display = "flex";
+		formPrecio = document.querySelector(".precioNuevo-form")
+		formPrecio.addEventListener("submit", function(e) {
+		var precioOk = 0;
+		inputPrecio = document.querySelector("#precioNuevo");
 			e.preventDefault()
-			inputPrecio = document.querySelector("#precioNuevo");
-			if (dialogoPrecio == "true") {
-				if(inputPrecio.value.length == 0 ){				
-			e.preventDefault()
-			mensajeError.innerHTML = "El precio debe ser un numero mayor a 0"
-			console.log("si estan vacion")
-	}
-	else if(regexPrecio.test(inputPrecio.value)){
-			
-			precioNuevo = "&precio=" + inputPrecio.value;
-				formPrecio.style.display = "none";
-				llamadaServidorAcciones()
-		} 
-				
+			mensajeError.innerHTML = "3"
+			if (dialogoPrecio == "true" && inputPrecio.value.length != 0 && regexPrecio.test(inputPrecio.value)) {
 				precioNuevo = "&precio=" + inputPrecio.value;
-				formPrecio.style.display = "none";
+				inputPrecio.value = "";
+				formPrecioBox.style.display = "none";
+				mensajeError.innerHTML = "1"
 				llamadaServidorAcciones()
+				precioOk = 1;
+				}  else if(dialogoPrecio == "true" && precioOk == 0) {
+					e.preventDefault()
+				mensajeError.innerHTML = "Solo admite numeros sin espacios"
+				
 			} else if (dialogoPrecio == "false") {
-				formPrecio.style.display = "none";
+				formPrecioBox.style.display = "none";
+				mensajeError.innerHTML = "2"
 				inputPrecio.value = "";
 			}
 		})
@@ -224,6 +242,7 @@ function obtenerIdLibro(idLibro, btn) {
 		llamadaServidorAcciones()
 	}
 }
+//LLAMADA AJAX AL SERVIDOR CON TODAS LAS ACCIONES DE LA TABLA 
 
 function llamadaServidorAcciones() {
 	var destino = "AccionesServ";
@@ -261,7 +280,7 @@ function respuestaServidorAcciones() {
 }
 
 var llamadaContadorCarrito = getXMLHTTPRequest();
-
+//LLAMADA AJAX AL SERVIDOR DE CONTADOR CARRITO PARA IMPRIMIR LA CANTIDAD DE INFORMACION QUE TIENE CARRITO
 function llamadaServidorContador() {
 	var destino = "contadorCarritoServ";
 	var numRandom = Math.floor(Math.random() * 9999999999999);

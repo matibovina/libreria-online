@@ -15,33 +15,19 @@ import javax.servlet.http.HttpSession;
 public class CerrarSesionServ extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
-    public CerrarSesionServ() {
-        super();
-        // TODO Auto-generated constructor stub
-    }
-
-	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
-	 */
+    //SERVLET PARA OBTENER LA CANTIDAD DE FILAS QUE TIENE LA TABLA CARRITO
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
 		HttpSession sesion = request.getSession();
 		sesion.invalidate();
 		System.out.println("llega a cierre sesion");
 		request.getRequestDispatcher("index.jsp").forward(request, response);
 	}
 
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
-	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
+
 		
 		HttpSession sesion = request.getSession();
-		sesion.invalidate();
+		sesion.invalidate(); //Cierra sesion y redirije al index
 		System.out.println("llega a cierre sesion");
 		request.getRequestDispatcher("index.jsp").forward(request, response);
 	}

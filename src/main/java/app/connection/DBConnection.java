@@ -30,7 +30,7 @@ public class DBConnection {
 				Statement stm = instance.createStatement();
 				String sql = "CREATE DATABASE IF NOT EXISTS libreriadb";
 				stm.executeUpdate(sql);				
-				crearTablas();
+//				crearTablas();
 				
 			}
 			return instance;
@@ -42,12 +42,12 @@ public class DBConnection {
 //		}
 		
 		public static void crearTablas() throws SQLException, ClassNotFoundException {
-			tablaClientes();
-			tablaLibros();
-	//		agregarIndexPrecioTablaLibros();
-			tablaCarrito();
-			tablaCompra();
-			inserts();
+//			tablaClientes();
+//			tablaLibros();
+//			agregarIndexPrecioTablaLibros();
+//			tablaCarrito();
+//			tablaCompra();
+//			inserts();
 		}
 		
 		public static void tablaClientes() throws SQLException, ClassNotFoundException {

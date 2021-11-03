@@ -45,7 +45,7 @@ public class LoginServ extends HttpServlet {
 		String opcion = request.getParameter("opcion");
 		String mensaje = "";
 		System.out.println("VALOR OPCION EN LOG IN" + opcion);
-		if ("1".equals(opcion)) {
+		if ("1".equals(opcion)) { //SI LA OPCION ES 1 REDIRIJE A LOG IN
 
 			Cookie[] listaCookies = request.getCookies();
 			for (Cookie cookie : listaCookies) {
@@ -57,7 +57,7 @@ public class LoginServ extends HttpServlet {
 			request.getRequestDispatcher("login.jsp").forward(request, response);
 
 		}
-		else if ("2".equals(opcion)) {
+		else if ("2".equals(opcion)) { //SI LA OPCION ES 2 REDIRIJE A REGISTRO DE USUARIO
 
 			Cookie[] listaCookies = request.getCookies();
 			for (Cookie cookie : listaCookies) {

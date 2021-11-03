@@ -23,6 +23,7 @@
 			<a class="btn2" href="" id="cerrarSesion">Cerrar Sesion</a>
 			</div>
   </header>
+  <section class="mainSection">
   <div class="buscar">
   </div>
   <section id="pago">
@@ -35,11 +36,11 @@
     <option value="3">MasterCard</option>
     <option value="4">American Express</option>
   </select>
-  <input type="text" placeholder="Numero de tarjeta" required>
-  <input type="text" placeholder="Nombre en la tarjeta" required>
-  <input type="text" placeholder="CSV" required>
-  <input type="text" name="domicilio" id="" placeholder="Direccion de envio" required>
-  <input type="text" name="ciudad" placeholder="Ciudad" required>
+  <input type="text" placeholder="Numero de tarjeta" value="5540500001000004" required>
+  <input type="text" placeholder="Nombre en la tarjeta" value="Juan de los Palotes" required>
+  <input type="text" placeholder="CSV" value="303" required>
+  <input type="text" name="domicilio" id="" placeholder="Direccion de envio" value="Av. Las Golondrias 123" required>
+  <input type="text" name="ciudad" placeholder="Ciudad" value="Barcelona" required>
   <input type="submit" class="submit" value="Pagar">
 </form>
  <a href="carrito.jsp" class="btn2">Atras</a>   
@@ -60,10 +61,11 @@
 	</table>
     
 </section>
+</section>
   <footer>
-    <a class="icon-footer" href="https//:www.facebook.com"><img class="icon" src="img/facebook.png" alt=""></a>
-    <a class="icon-footer" href="https//:www.instagram.com"><img class="icon" src="img/instagram.png" alt=""></a>
-    <a class="icon-footer" href="https//:www.twitter.com"><img class="icon" src="img/twitter.png" alt=""></a>
+    <a class="icon-footer" href="https//:www.facebook.com"><i class="fab fa-facebook"></i></a>
+    <a class="icon-footer" href="https//:www.instagram.com"><i class="fab fa-instagram-square"></i></a>
+    <a class="icon-footer" href="https//:www.twitter.com"><i class="fab fa-twitter"></i></a>
   </footer>
 <script src="carrito_app.js"></script>
 <script src="cerrarSesion.js"></script>

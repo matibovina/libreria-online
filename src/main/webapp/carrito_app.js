@@ -23,7 +23,7 @@ function getXMLHTTPRequest() {
 	}
 	return req;
 }
-
+//LLAMADA AJAX PARA LISTAR CARRITO DE COMPRAS 
 var llamada3 = getXMLHTTPRequest();
 function llamadaServidorCarrito() {
 
@@ -67,7 +67,7 @@ function respuestaServidor() {
 }
 
 
-
+//LAMADA AJAX PARA ELIMINAR FILAS DEL CARRITO DE COMPRAS
 window.onload = function() {
 	llamadaServidorCarrito();
 
@@ -102,6 +102,7 @@ function respuestaServidorBorrar() {
 		}
 	}
 }
+//FUNCIONES PARA MANEJAR EL PAGO DE LOS OBJETOS QUE ESTAN EN CARRITO
 botonPagar = document.querySelector("#botonPagar").addEventListener("click", function(e){
 	e.preventDefault()
 	mostrarFormulario()

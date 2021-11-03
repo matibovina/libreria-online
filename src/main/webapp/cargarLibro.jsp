@@ -3,6 +3,8 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+<script src="https://kit.fontawesome.com/3758ab675a.js"
+	crossorigin="anonymous"></script>
 <link rel="stylesheet" href="style.css">
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -17,14 +19,18 @@
 	}
 	
 %>
-		<a href="index.jsp"><img class="logo-nav"
+		<a href="tablaLibros.jsp"><img class="logo-nav"
 			src="logo/logo_white_large.png" alt=""></a>
 	</header>
 	
-	<section>
-			<h4 id="mensajeError" class="mensajeError">Debe completar todos los campos</h4>
+	 <section class="mainSection">
+			<h4 id="mensajeError" class="mensajeError"></h4>
 	
 		<h2 class="titulo">Cargar Libro Nuevo</h2>
+		 <% String mensaje = (String)request.getAttribute("mensaje"); %>
+		<% if (mensaje!=null){ %>
+			<h4 class="mensaje"><%= mensaje %></h4>
+		<%}%>
 		<div class="form">
 			<form action="ProcesoNuevoLibroServ" name="cargarLibro" method="POST"
 				class="fromulario" id="nuevoLibro">
@@ -39,7 +45,7 @@
 				</div>
 				<div class="campos-form">
 					<!-- <label for="password">Contraseña</label> -->
-					<input type="text" name="ISBN" id="isbn" placeholder="ISBN">
+					<input type="text" name="ISBN" id="isbn" placeholder="ISBN Formato: 000-000">
 				</div>
 				<div class="campos-form">
 					<!-- <label for="user">Email</label> -->
@@ -47,7 +53,7 @@
 				</div>
 				<div class="campos-form">
 					<!-- <label for="user">Usuario</label> -->
-					<input type="text" name="precio" id="precio" placeholder="Precio">
+					<input type="text" name="precio" id="precio" placeholder="Precio (Numero Entero)">
 				</div>
 
 				<div class="btn-box">
@@ -57,14 +63,11 @@
 			</form>
 		</div>
 	</section>
-	<footer>
-		<a class="icon-footer" href="https//:www.facebook.com"><img
-			class="icon" src="img/facebook.png" alt=""></a> <a
-			class="icon-footer" href="https//:www.instagram.com"><img
-			class="icon" src="img/instagram.png" alt=""></a> <a
-			class="icon-footer" href="https//:www.twitter.com"><img
-			class="icon" src="img/twitter.png" alt=""></a>
-	</footer>
-<!-- <script src="validacion.js"></script> -->
+  <footer>
+    <a class="icon-footer" href="https//:www.facebook.com"><i class="fab fa-facebook"></i></a>
+    <a class="icon-footer" href="https//:www.instagram.com"><i class="fab fa-instagram-square"></i></a>
+    <a class="icon-footer" href="https//:www.twitter.com"><i class="fab fa-twitter"></i></a>
+  </footer>
+ <script src="validacionNuevoLibro.js"></script>
 </body>
 </html>

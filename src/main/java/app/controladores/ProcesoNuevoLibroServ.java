@@ -51,7 +51,7 @@ public class ProcesoNuevoLibroServ extends HttpServlet {
 		}
 
 	}
-	
+	//SERVIDOR PARA DAR DE ALTA UN NUEVO LIBRO 
 	protected void nuevoLibro(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, SQLException, ClassNotFoundException{
 		
 		String opcion = request.getParameter("opcion");
@@ -63,15 +63,14 @@ public class ProcesoNuevoLibroServ extends HttpServlet {
 		String isbn = request.getParameter("ISBN");
 		String genero = request.getParameter("genero");
 		int precio = Integer.parseInt(request.getParameter("precio"));
-		//if(DAOLibro.getInstance().validarISBN(isbn) || DAOLibro.getInstance().validarTitulo(titulo)) {
-		if(libro.validarISBN(isbn) || libro.validarTitulo(titulo)) {
+		if(libro.validarISBN(isbn) || libro.validarTitulo(titulo)) { //COMPRUEBA QUE ISBN Y TITULO NO EXISTAN 
+			System.out.println("prueba de entrada mismo isbn");
 			mensaje = "Ya existe un libro con ese titulo o ISBN";
-			request.getRequestDispatcher(mensaje).forward(request, response);;
+			request.setAttribute("mensaje", mensaje);
+			request.getRequestDispatcher("cargarLibro.jsp").forward(request, response);;
 		} else {
-			//id_libro = DAOLibro.getInstance().buscarUltimoIdLibro();
 			id_libro = libro.buscarUltimoIdLibro();
 			libro = new Libro(id_libro, titulo, autor, isbn, precio, genero);
-			//DAOLibro.getInstance().insertarLibro_DAO(libro);
 			libro.insertarLibro(libro);
 			request.getRequestDispatcher("tablaLibros.jsp").forward(request, response);;
 		}

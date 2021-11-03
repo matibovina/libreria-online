@@ -65,16 +65,16 @@ public class AccionesServ extends HttpServlet {
 		try {
 			switch(opcion) {
 			case "1":
-				resultadoJSON =libro.listarIsbnJSON(buscador);
+				resultadoJSON =libro.listarIsbnJSON(buscador); //SI VALOR OPCION 1 BUSCA POR ISBN
 				break;
 			case "2":
-				resultadoJSON =libro.listarTituloJSON(buscador);
+				resultadoJSON =libro.listarTituloJSON(buscador); // SI LA OPCION ES 2 BUSCA POR TITULO
 				break;
-			case "3":
+			case "3": //SI LA OPCION ES EDITA EL PRECIO DEL LIBRO
 				libro.editarLibro(Integer.parseInt(id_libro), Integer.parseInt(precio));
 				carrito.editarLibro(Integer.parseInt(id_libro), Integer.parseInt(precio));
 			break;
-			case "4":
+			case "4": //SI LA OPCION ES 4 BORRA EL LIBRO
 				carrito.borrarLibro(Integer.parseInt(id_libro));
 				DAOCarrito.getInstance().borrarLibro(Integer.parseInt(id_libro));
 				libro.borrarLibro(Integer.parseInt(id_libro));
@@ -83,7 +83,7 @@ public class AccionesServ extends HttpServlet {
 				
 				break;
 			case "5":
-			case "6":
+			case "6": //SI LA OPCION ES 5 O 6 AGREGA AL CARRITO - PERO A LA VEZ SI ES 6 REDIRIJE AL CARRITO
 				id_carrito = carrito.buscarUltimoIdCarrito();
 				
 				libro = libro.buscarIdLibro(Integer.parseInt(id_libro));

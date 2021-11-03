@@ -53,6 +53,7 @@ public class ListarCarritoServ extends HttpServlet {
 			e.printStackTrace();
 		}
 	}
+	//SERVIDOR PARA CONTROLAR LAS ACCIONES DEL CARRITO - BORRAR
 	protected void accionesCarrito(HttpServletRequest request, HttpServletResponse response) throws ClassNotFoundException, SQLException, IOException {
 		String listaJSON = "";
 		String opcion = request.getParameter("opcion"); 
