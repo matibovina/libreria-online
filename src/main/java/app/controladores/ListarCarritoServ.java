@@ -19,19 +19,9 @@ import app.modelo.Carrito;
 @WebServlet("/ListarCarritoServ")
 public class ListarCarritoServ extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
-    public ListarCarritoServ() {
-        super();
-        // TODO Auto-generated constructor stub
-    }
 
-	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
-	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		try {
 			accionesCarrito(request, response);
@@ -41,10 +31,8 @@ public class ListarCarritoServ extends HttpServlet {
 		}
 	}
 
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
-	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		try {
 			accionesCarrito(request, response);
@@ -53,25 +41,26 @@ public class ListarCarritoServ extends HttpServlet {
 			e.printStackTrace();
 		}
 	}
-	//SERVIDOR PARA CONTROLAR LAS ACCIONES DEL CARRITO - BORRAR
-	protected void accionesCarrito(HttpServletRequest request, HttpServletResponse response) throws ClassNotFoundException, SQLException, IOException {
+
+	// SERVIDOR PARA CONTROLAR LAS ACCIONES DEL CARRITO - BORRAR
+	protected void accionesCarrito(HttpServletRequest request, HttpServletResponse response)
+			throws ClassNotFoundException, SQLException, IOException {
 		String listaJSON = "";
-		String opcion = request.getParameter("opcion"); 
+		String opcion = request.getParameter("opcion");
 		Carrito carrito = new Carrito();
 		HttpSession sesion = request.getSession();
 		int id_cliente = Integer.parseInt((sesion.getAttribute("id_cliente").toString()));
 		String id_libro = request.getParameter("id_libro");
-		if("1".equals(opcion)) {
+		if ("1".equals(opcion)) {
 			carrito.borrarItemCarrito(Integer.parseInt(id_libro), id_cliente);
-			//DAOCarrito.getInstance().borrarItemCarrito(Integer.parseInt(id_libro), id_cliente);
-		
+
+
+		} else if ("2".equals(opcion)) {
+			carrito.borrarLibroCliente(id_cliente);
 		}
 		listaJSON = carrito.listarCarritoJSON(id_cliente);
-		//listaJSON = DAOCarrito.getInstance().listarCarritoJSON(id_cliente);
-		
-		
+
 		PrintWriter out = response.getWriter();
 		out.print(listaJSON);
 	}
 }
-

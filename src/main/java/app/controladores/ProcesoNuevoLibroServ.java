@@ -17,26 +17,12 @@ import app.modelo.Libro;
 @WebServlet("/ProcesoNuevoLibroServ")
 public class ProcesoNuevoLibroServ extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
-    public ProcesoNuevoLibroServ() {
-        super();
-        // TODO Auto-generated constructor stub
-    }
 
-	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
-	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		doPost(request, response);
 	}
 
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
-	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		request.getSession().getAttribute("user");
@@ -61,7 +47,6 @@ public class ProcesoNuevoLibroServ extends HttpServlet {
 		String genero = request.getParameter("genero");
 		double precio = Double.parseDouble(request.getParameter("precio"));
 		if(libro.validarISBN(isbn) || libro.validarTitulo(titulo)) { //COMPRUEBA QUE ISBN Y TITULO NO EXISTAN 
-			System.out.println("prueba de entrada mismo isbn");
 			mensaje = "Ya existe un libro con ese titulo o ISBN";
 			request.setAttribute("mensaje", mensaje);
 			request.getRequestDispatcher("cargarLibro.jsp").forward(request, response);;

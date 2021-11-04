@@ -13,19 +13,15 @@ let apellido = document.querySelector('#apellido');
 let fecha = document.querySelector('#fechaNamicimiento');
 let email = document.querySelector('#email'); 
 let user = document.querySelector('#user'); 
-//|| 
 let password = document.querySelector('#password'); 
 let password1 = document.querySelector('#password1'); 
 	if(nombre.value.length == 0 || apellido.value.length == 0 || fecha.value.length == 0 || email.value.length == 0 || user.value.length == 0 || password.value.length == 0 || password1.value.length == 0){
 		e.preventDefault()
 		mensajeError.innerHTML = "Los campos no pueden estar vacios en javascript"
 	} else if(!emailRegex.test(email.value)){
-			
 			e.preventDefault()
 			mensajeError.innerHTML = "El formato de email es incorrecto - \"usuario@email.com\""
-	
-			console.log("si el email es incorrecto")
-		} else if(!userRegex.test(user.value)){
+			} else if(!userRegex.test(user.value)){
 			e.preventDefault()
 			mensajeError.innerHTML = "El usuario debe contener letras minusculas y numeros"
 		} else if(!passwordRegex.test(password.value)){

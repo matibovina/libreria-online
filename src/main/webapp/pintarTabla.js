@@ -94,7 +94,7 @@ function respuestaServidor() {
 					"<td>" + listaLibrosJSON[i].autor + "</td>" +
 					"<td>" + listaLibrosJSON[i].ISBN + "</td>" +
 					"<td>" + listaLibrosJSON[i].genero + "</td>" +
-					"<td>" + listaLibrosJSON[i].precio + "&euro;</td>" +
+					"<td>" + (Math.round(listaLibrosJSON[i].precio * 100) / 100).toFixed(2)  + "&euro;</td>" +
 					"<td><input type=\"hidden\" name=\"opcion\" value=\"3\">" +
 					"<button id=\"1\" class=\"actions editar\" type=\"submit\" onclick=\"obtenerIdLibro(" + listaLibrosJSON[i].id_libro + ",this)\"><i class=\"editar fas fa-edit\"></i></button>" +
 					"<input type=\"hidden\" name=\"opcion\" value=\"4\">" +
@@ -115,7 +115,7 @@ botonAtras.style.display = "none";
 // FUNCION PARA UTILIZAR EL BUSCADOR POR TITULO O ISBN
 formulario.addEventListener("submit", function(e) {
 	e.preventDefault();
-	if(selectedItem.value == 0 && valorBusqueda.value.length == 0){
+	if(selectedItem.value == 0 || valorBusqueda.value.length == 0){
 		e.preventDefault();
 	} else {
 		llamadaServidorBuscador();
@@ -127,7 +127,6 @@ formulario.addEventListener("submit", function(e) {
 function llamadaServidorBuscador() {
 	buscador = "&buscador=" + valorBusqueda.value;
 	var destino = "AccionesServ";
-	console.log("intenta hacer la llamada");
 	if (selectedItem.value == 1 && valorBusqueda.value.length != 0) {
 		optionUrl = "&opcion=1";
 	} else if (selectedItem.value == 2 && valorBusqueda.value.length != 0) {
@@ -167,7 +166,7 @@ function respuestaServidorBuscador() {
 						"<td>" + resultadoBusquedaJSON[i].autor + "</td>" +
 						"<td>" + resultadoBusquedaJSON[i].ISBN + "</td>" +
 						"<td>" + resultadoBusquedaJSON[i].genero + "</td>" +
-						"<td>" + resultadoBusquedaJSON[i].precio + "&euro;</td>" +
+						"<td>" + (Math.round(resultadoBusquedaJSON[i].precio * 100) / 100).toFixed(2)  + "&euro;</td>" +
 						"<td><input type=\"hidden\" name=\"opcion\" value=\"3\">" +
 						"<button id=\"1\" class=\"actions\" type=\"submit\" onclick=\"obtenerIdLibro(" + resultadoBusquedaJSON[i].id_libro + ",this)\"><i class=\"editar fas fa-edit\"></i></button>" +
 						"<input type=\"hidden\" name=\"opcion\" value=\"4\">" +
@@ -252,7 +251,6 @@ function llamadaServidorAcciones() {
 		optionUrl = "&opcion=3";
 		
 		miUrl = destino + '?random=' + numRandom + optionUrl + "&id_libro=" + id_libro + precioNuevo;
-		console.log(miUrl)
 	} else if (button == "2") {
 		optionUrl = "&opcion=4";
 		miUrl = destino + '?random=' + numRandom + optionUrl + "&id_libro=" + id_libro;
@@ -284,7 +282,6 @@ var llamadaContadorCarrito = getXMLHTTPRequest();
 function llamadaServidorContador() {
 	var destino = "contadorCarritoServ";
 	var numRandom = Math.floor(Math.random() * 9999999999999);
-	console.log("llama a contador carrito por el GET");
 	var miUrl = destino + '?random=' + numRandom;
 	llamadaContadorCarrito.open("POST", miUrl, true);
 	llamadaContadorCarrito.onreadystatechange = respuestaServidorContador
@@ -296,7 +293,6 @@ function respuestaServidorContador() {
 		if (llamadaContadorCarrito.status == 200) {
 
 			let resultadoBusqueda = llamadaContadorCarrito.responseText;
-			console.log(parseInt(resultadoBusqueda))
 			contadorCarrito = parseInt(resultadoBusqueda);
 			carrito.innerHTML = contadorCarrito;
 		}

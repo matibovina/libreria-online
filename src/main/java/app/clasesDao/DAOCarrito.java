@@ -64,8 +64,8 @@ public class DAOCarrito {
 			if (listaLibros == null) {
 				listaLibros = new ArrayList<Carrito>();
 			}
-			listaLibros.add(
-					new Carrito(result.getInt("id_carrito"), result.getInt("id_cliente"), result.getInt("id_libro"), result.getString("titulo"), result.getDouble("precio")));
+			listaLibros.add(new Carrito(result.getInt("id_carrito"), result.getInt("id_cliente"),
+					result.getInt("id_libro"), result.getString("titulo"), result.getDouble("precio")));
 		}
 		result.close();
 		ps.close();
@@ -77,26 +77,28 @@ public class DAOCarrito {
 	}
 
 	public void borrarItemCarrito(int id_libro, int id_cliente) throws SQLException {
-		PreparedStatement ps = con.prepareStatement("DELETE FROM libreriadb.carrito WHERE id_libro=? and id_cliente=? LIMIT 1");
+		PreparedStatement ps = con
+				.prepareStatement("DELETE FROM libreriadb.carrito WHERE id_libro=? and id_cliente=? LIMIT 1");
 		ps.setInt(1, id_libro);
 		ps.setInt(2, id_cliente);
 
 		ps.executeUpdate();
 		ps.close();
 	}
-	
+
 	public int contadorCarrito(int id_cliente) throws SQLException {
 		PreparedStatement ps = con.prepareStatement("SELECT count(*) FROM carrito WHERE id_cliente = ?");
 		ps.setInt(1, id_cliente);
 		int cantidadLibros = 0;
 		ResultSet result = ps.executeQuery();
-		if(result.next()) {
+		if (result.next()) {
 			cantidadLibros = result.getInt(1);
 		}
 		result.close();
 		ps.close();
 		return cantidadLibros;
 	}
+
 	public void borrarLibro(int id_libro) throws SQLException {
 		PreparedStatement ps = con.prepareStatement("DELETE FROM libreriadb.carrito WHERE id_libro=?");
 		ps.setInt(1, id_libro);
@@ -104,7 +106,15 @@ public class DAOCarrito {
 		ps.executeUpdate();
 		ps.close();
 	}
-	
+
+	public void borrarLibroCliente(int id_cliente) throws SQLException {
+		PreparedStatement ps = con.prepareStatement("DELETE FROM libreriadb.carrito WHERE id_cliente=?");
+		ps.setInt(1, id_cliente);
+
+		ps.executeUpdate();
+		ps.close();
+	}
+
 	public void editarLibro_DAO(int id, double precio) throws SQLException {
 		PreparedStatement ps = con.prepareStatement("UPDATE libreriadb.carrito SET precio= ? WHERE id_libro=?");
 		ps.setDouble(1, precio);
@@ -113,11 +123,11 @@ public class DAOCarrito {
 		ps.executeUpdate();
 		ps.close();
 	}
-	
+
 	public String listarCarritoJSON(int id_cliente) throws SQLException {
 		Gson gson = new Gson();
 		String JSON = gson.toJson(this.listarCarrito(id_cliente));
 		return JSON;
 	}
-	
+
 }

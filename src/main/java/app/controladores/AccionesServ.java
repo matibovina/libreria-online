@@ -22,36 +22,21 @@ import app.modelo.Libro;
 @WebServlet("/AccionesServ")
 public class AccionesServ extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
-    public AccionesServ() {
-        super();
-        // TODO Auto-generated constructor stub
-    }
 
-	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
-	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		//AccionesLibros(request, response);
-
-		
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 	}
 
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
-	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		AccionesLibros(request, response);
 	}
+
 	protected void AccionesLibros(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		HttpSession sesion = request.getSession();
-		int id_cliente = Integer.parseInt((sesion.getAttribute("id_cliente").toString())) ;
+		int id_cliente = Integer.parseInt((sesion.getAttribute("id_cliente").toString()));
 		int contadorCarrito = 0;
 		String resultadoJSON = "";
 		String opcion = request.getParameter("opcion");
@@ -63,48 +48,46 @@ public class AccionesServ extends HttpServlet {
 		PrintWriter out = response.getWriter();
 		Libro libro = new Libro();
 		try {
-			switch(opcion) {
+			switch (opcion) {
 			case "1":
-				resultadoJSON =libro.listarIsbnJSON(buscador); //SI VALOR OPCION 1 BUSCA POR ISBN
+				if (libro.validarISBN(buscador)) {
+					resultadoJSON = libro.listarIsbnJSON(buscador); // SI VALOR OPCION 1 BUSCA POR ISBN
+				}
 				break;
 			case "2":
-				resultadoJSON =libro.listarTituloJSON(buscador); // SI LA OPCION ES 2 BUSCA POR TITULO
+				if (libro.validarTitulo(buscador)) {
+					resultadoJSON = libro.listarTituloJSON(buscador); // SI LA OPCION ES 2 BUSCA POR TITULO
+				}
 				break;
-			case "3": //SI LA OPCION ES EDITA EL PRECIO DEL LIBRO
+			case "3": // SI LA OPCION ES EDITA EL PRECIO DEL LIBRO
 				libro.editarLibro(Integer.parseInt(id_libro), Double.parseDouble(precio));
 				carrito.editarLibro(Integer.parseInt(id_libro), Double.parseDouble(precio));
-			break;
-			case "4": //SI LA OPCION ES 4 BORRA EL LIBRO
+				break;
+			case "4": // SI LA OPCION ES 4 BORRA EL LIBRO
 				carrito.borrarLibro(Integer.parseInt(id_libro));
-				DAOCarrito.getInstance().borrarLibro(Integer.parseInt(id_libro));
 				libro.borrarLibro(Integer.parseInt(id_libro));
-				DAOLibro.getInstance().borrarLibro(Integer.parseInt(id_libro));
-				
-				
 				break;
 			case "5":
-			case "6": //SI LA OPCION ES 5 O 6 AGREGA AL CARRITO - PERO A LA VEZ SI ES 6 REDIRIJE AL CARRITO
+			case "6": // SI LA OPCION ES 5 O 6 AGREGA AL CARRITO - PERO A LA VEZ SI ES 6 REDIRIJE AL
+						// CARRITO
 				id_carrito = carrito.buscarUltimoIdCarrito();
-				
+
 				libro = libro.buscarIdLibro(Integer.parseInt(id_libro));
-				carrito = new Carrito(id_carrito, id_cliente, Integer.parseInt(id_libro), libro.getTitulo(), libro.getPrecio());
+				carrito = new Carrito(id_carrito, id_cliente, Integer.parseInt(id_libro), libro.getTitulo(),
+						libro.getPrecio());
 				carrito.insertarCarrito(carrito);
 				contadorCarrito = carrito.contadorCarrito(id_cliente);
-				System.out.println("Contador carrito" + contadorCarrito);
 				out.print(contadorCarrito);
 				break;
 
-			}			
+			}
 			out.print(resultadoJSON);
-			
+
 		} catch (ClassNotFoundException e) {
 			// TODO Auto-generated catch block
-			System.err.print("Class Not Found");
 			e.printStackTrace();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
-			System.err.print("SQL Exception");
-
 			e.printStackTrace();
 		}
 	}

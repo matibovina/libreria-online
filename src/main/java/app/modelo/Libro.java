@@ -20,7 +20,6 @@ public class Libro {
 		this.ISBN = ISBN;
 		this.precio = precio;
 		this.genero = genero;
-
 	}
 
 	public Libro() {
@@ -74,9 +73,11 @@ public class Libro {
 	public void setISBN(String iSBN) {
 		ISBN = iSBN;
 	}
+
 	public int buscarUltimoIdLibro() throws SQLException, ClassNotFoundException {
 		return DAOLibro.getInstance().buscarUltimoIdLibro();
 	}
+
 	public Libro buscarIdLibro(int id_libro) throws ClassNotFoundException, SQLException {
 		return DAOLibro.getInstance().buscarPorIdLibro(id_libro);
 	}
@@ -100,7 +101,7 @@ public class Libro {
 	public void borrarLibro(int id_libro) throws SQLException, ClassNotFoundException {
 		DAOLibro.getInstance().borrarLibro(id_libro);
 	}
-	
+
 	public static String listaLibrosJSON() throws SQLException, ClassNotFoundException {
 		return DAOLibro.getInstance().listaLibrosJSON();
 	}

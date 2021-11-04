@@ -130,8 +130,9 @@ public class DAOLibro {
 	}
 
 	public ArrayList<Libro> buscarTitulos(String titulo) throws SQLException {
-		PreparedStatement ps = con.prepareStatement("SELECT * FROM libreriadb.libros WHERE titulo LIKE '" + titulo +"%'");
-		//ps.setString(1, titulo);
+		PreparedStatement ps = con
+				.prepareStatement("SELECT * FROM libreriadb.libros WHERE titulo LIKE '" + titulo + "%'");
+		// ps.setString(1, titulo);
 		ResultSet result = ps.executeQuery();
 
 		ArrayList<Libro> listaTitulos = null;
@@ -188,7 +189,6 @@ public class DAOLibro {
 
 	public String listarIsbnJSON(String isbn) throws SQLException {
 		Gson gson = new Gson();
-		System.err.println("llama a la funcion JSON ISBN EN DAO");
 		String JSON = gson.toJson(this.buscarPorISBN(isbn));
 		return JSON;
 	}

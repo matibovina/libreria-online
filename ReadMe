@@ -7,6 +7,10 @@ El proyecto necesita los siguientes .jar files( estan en la carpeta del proyecto
 
 Se incluye el file mysql con la base de datos ya creada. 
 
+
+El password solicitado es de 4 digitos por cuestiones practicas. Pero seria de 10 caracteres con 
+simbolos mayus/minus y numeros en ocasion real.
+
 El proyecto consiste en una libreria online donde el cliente puede
 comprar libros que esten disponibles. 
 

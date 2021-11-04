@@ -32,9 +32,9 @@ public class DAOCliente {
 	public int buscarUltimoId() throws SQLException {
 		PreparedStatement ps = con.prepareStatement("SELECT MAX(id_cliente) AS id_cliente FROM clientes");
 		ResultSet result = ps.executeQuery();
-		
+
 		int idClienteNuevo = 0;
-		
+
 		if (result.next()) {
 
 			idClienteNuevo = result.getInt("id_cliente") + 1;
@@ -62,75 +62,11 @@ public class DAOCliente {
 		PreparedStatement ps = con.prepareStatement("SELECT * FROM libreriadb.clientes WHERE user= ?");
 		ps.setString(1, usuario);
 		ResultSet result = ps.executeQuery();
-		System.out.println("hace la consulta del usuario en base de datos");
 		Cliente cliente = null;
 		if (result.next()) {
-			if(cliente == null) {
+			if (cliente == null) {
 				cliente = new Cliente();
 			}
-			cliente = new Cliente(result.getInt("id_cliente"), result.getString("nombre"), result.getString("apellido"),
-					result.getString("fechanac"), result.getString("email"), result.getString("user"),
-					result.getString("password"));
-			System.out.println(cliente.getEmail() + "este es el email del usuario");
-		} 
-		result.close();
-		ps.close();
-			
-			return cliente;
-	}
-	public boolean booleanPassword(String password) throws SQLException {
-		PreparedStatement ps = con.prepareStatement("SELECT clientes.user FROM libreriadb.clientes WHERE password= ?");
-		ps.setString(1, password);
-		System.out.println(password + "Este es el password que llega al DAO booleanUsuario");
-		boolean usuarioExiste = false;
-		ResultSet result = ps.executeQuery();
-		if (result.next()) {
-			System.out.println("Encuentra el password en el DAO");
-			usuarioExiste = true;
-			
-		} 
-		result.close();
-		ps.close();
-		return usuarioExiste;
-	}
-	public boolean booleanUsuario(String usuario) throws SQLException {
-		PreparedStatement ps = con.prepareStatement("SELECT clientes.user FROM libreriadb.clientes WHERE user= ?");
-		ps.setString(1, usuario);
-		System.out.println(usuario + "Este es el usuario que llega al DAO booleanUsuario");
-		boolean usuarioExiste = false;
-		ResultSet result = ps.executeQuery();
-		if (result.next()) {
-			System.out.println("Encuentra el usuario o el email en el DAO");
-			usuarioExiste = true;
-			
-		} 
-		result.close();
-		ps.close();
-		return usuarioExiste;
-	}
-	public boolean booleanEmail(String email) throws SQLException {
-		PreparedStatement ps = con.prepareStatement("SELECT * FROM libreriadb.clientes WHERE email=?");
-		ps.setString(1, email);
-		boolean emailExiste = false;
-		ResultSet result = ps.executeQuery();
-		if (result.next()) {
-			System.out.println("Encuentra el usuario o el email en el DAO");
-			emailExiste = true;
-			
-		} 
-		result.close();
-		ps.close();
-		return emailExiste;
-	}
-	
-
-		public Cliente buscarPorPassword(String password) throws SQLException {
-		PreparedStatement ps = con.prepareStatement("SELECT * FROM libreriadb.clientes WHERE password= ?");
-		ps.setString(1, password);
-		ResultSet result = ps.executeQuery();
-		Cliente cliente = null;
-		if (result.next()) {
-			
 			cliente = new Cliente(result.getInt("id_cliente"), result.getString("nombre"), result.getString("apellido"),
 					result.getString("fechanac"), result.getString("email"), result.getString("user"),
 					result.getString("password"));
@@ -139,9 +75,66 @@ public class DAOCliente {
 		ps.close();
 
 		return cliente;
-
 	}
-	
+
+	public boolean booleanPassword(String password) throws SQLException {
+		PreparedStatement ps = con.prepareStatement("SELECT clientes.user FROM libreriadb.clientes WHERE password= ?");
+		ps.setString(1, password);
+		boolean usuarioExiste = false;
+		ResultSet result = ps.executeQuery();
+		if (result.next()) {
+			usuarioExiste = true;
+
+		}
+		result.close();
+		ps.close();
+		return usuarioExiste;
+	}
+
+	public boolean booleanUsuario(String usuario) throws SQLException {
+		PreparedStatement ps = con.prepareStatement("SELECT clientes.user FROM libreriadb.clientes WHERE user= ?");
+		ps.setString(1, usuario);
+		boolean usuarioExiste = false;
+		ResultSet result = ps.executeQuery();
+		if (result.next()) {
+			usuarioExiste = true;
+
+		}
+		result.close();
+		ps.close();
+		return usuarioExiste;
+	}
+
+	public boolean booleanEmail(String email) throws SQLException {
+		PreparedStatement ps = con.prepareStatement("SELECT * FROM libreriadb.clientes WHERE email=?");
+		ps.setString(1, email);
+		boolean emailExiste = false;
+		ResultSet result = ps.executeQuery();
+		if (result.next()) {
+			emailExiste = true;
+
+		}
+		result.close();
+		ps.close();
+		return emailExiste;
+	}
+
+	public Cliente buscarPorPassword(String password) throws SQLException {
+		PreparedStatement ps = con.prepareStatement("SELECT * FROM libreriadb.clientes WHERE password= ?");
+		ps.setString(1, password);
+		ResultSet result = ps.executeQuery();
+		Cliente cliente = null;
+		if (result.next()) {
+
+			cliente = new Cliente(result.getInt("id_cliente"), result.getString("nombre"), result.getString("apellido"),
+					result.getString("fechanac"), result.getString("email"), result.getString("user"),
+					result.getString("password"));
+		}
+		result.close();
+		ps.close();
+
+		return cliente;
+	}
 
 	public Cliente buscarPorEmail(String email) throws SQLException {
 		PreparedStatement ps = con.prepareStatement("SELECT * FROM libreriadb.clientes WHERE user= ?");
@@ -177,7 +170,6 @@ public class DAOCliente {
 		ps.close();
 
 		return cliente;
-
 	}
 
 	public void editarUsuario_DAO(Cliente cliente, String password) throws SQLException {

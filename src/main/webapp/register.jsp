@@ -26,32 +26,25 @@
 		<form action="ProcesoRegisroServ" name="register" method="POST" class="fromulario">
 		
 			<div class="campos-form">
-        <!-- <label for="user">Nombre</label> -->
 				<input type="text" name="nombre" id="nombre" placeholder="nombre">
 			</div>
 			<div class="campos-form">
-        <!-- <label for="user">Apellido</label> -->
 				<input type="text" name="apellido" id="apellido" placeholder="apellido">
 			</div>
 			<div class="campos-form">
-        <!-- <label for="user">Fecha de Nac</label> -->
         <input type="text" onfocus="(this.type='date')" name="fechaNacimiento" id="fechaNamicimiento" placeholder="Fecha Nacimiento">
 			</div>
 			<div class="campos-form">
-        <!-- <label for="user">Email</label> -->
 				<input type="text" name="email" id="email" placeholder="Email">
 			</div>
 			<div class="campos-form">
-        <!-- <label for="user">Usuario</label> -->
 				<input type="text" name="user" id="user" placeholder="Ingrese usuario">
 			</div>
 			<div class="campos-form">
-        <!-- <label for="password">Contraseña</label> -->
 				<input type="password" name="password" id="password"
 					placeholder="Ingrese contraseña">
 			</div>
 			<div class="campos-form">
-        <!-- <label for="password">Contraseña</label> -->
 				<input type="password" name="password1" id="password1"
 					placeholder="Vuelva a ingresar contraseña">
 			</div>
@@ -64,11 +57,7 @@
 		</form>
   </div>
 </section>
-  <footer>
-    <a class="icon-footer" href="https//:www.facebook.com"><i class="fab fa-facebook"></i></a>
-    <a class="icon-footer" href="https//:www.instagram.com"><i class="fab fa-instagram-square"></i></a>
-    <a class="icon-footer" href="https//:www.twitter.com"><i class="fab fa-twitter"></i></a>
-  </footer>
+	<%@include file="includes/footer.jsp" %>
    <script src="validacionRegister.js"></script>
 
 </body>

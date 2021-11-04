@@ -14,13 +14,12 @@ public class Cliente {
 	private String usuario;
 	private String password;
 
-
 	public Cliente() {
 		// TODO Auto-generated constructor stub
 	}
 
-	public Cliente(int id_cliente, String nombre, String apellido, String fechaNac, String email, String usuario, String password
-			) {
+	public Cliente(int id_cliente, String nombre, String apellido, String fechaNac, String email, String usuario,
+			String password) {
 		this.id_cliente = id_cliente;
 		this.nombre = nombre;
 		this.apellido = apellido;
@@ -86,46 +85,45 @@ public class Cliente {
 	public void setFechaNac(String fechaNac) {
 		this.fechaNac = fechaNac;
 	}
-	
+
 	public int buscarUltimoId() throws SQLException, ClassNotFoundException {
 		return DAOCliente.getInstance().buscarUltimoId();
 	}
-	
+
 	public void insertarCliente(Cliente cliente) throws SQLException, ClassNotFoundException {
 		DAOCliente.getInstance().insertarCliente_DAO(cliente);
 	}
-	
+
 	public Cliente buscarPorUsuario(String usuario) throws SQLException, ClassNotFoundException {
 		return DAOCliente.getInstance().buscarPorUsuario(usuario);
 	}
-	
+
 	public boolean booleanUsuario(String usuario) throws SQLException, ClassNotFoundException {
 		return DAOCliente.getInstance().booleanUsuario(usuario);
 	}
-	
+
 	public boolean booleanPassword(String password) throws SQLException, ClassNotFoundException {
 		return DAOCliente.getInstance().booleanPassword(password);
 	}
-	
+
 	public boolean booleanEmail(String email) throws SQLException, ClassNotFoundException {
 		return DAOCliente.getInstance().booleanEmail(email);
 	}
-	
+
 	public Cliente buscarPorPassword(String password) throws SQLException, ClassNotFoundException {
 		return DAOCliente.getInstance().buscarPorPassword(password);
 	}
-	
+
 	public Cliente loginCliente(String usuario, String password) throws SQLException, ClassNotFoundException {
 		return DAOCliente.getInstance().loginCliente(usuario, password);
 	}
-	
+
 	public void editarUsuario(Cliente cliente, String password) throws SQLException, ClassNotFoundException {
-		 DAOCliente.getInstance().editarUsuario_DAO(cliente, password);
+		DAOCliente.getInstance().editarUsuario_DAO(cliente, password);
 	}
-	
+
 	public ArrayList<Cliente> listarCliente() throws SQLException, ClassNotFoundException {
 		return DAOCliente.getInstance().listarCliente();
 	}
-	
-	
+
 }

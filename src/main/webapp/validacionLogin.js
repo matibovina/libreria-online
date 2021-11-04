@@ -9,14 +9,11 @@ loginForm.addEventListener("submit", function(e){
 	if(user.value.length == 0 || password.value.length == 0){				
 			e.preventDefault()
 			mensajeError.innerHTML = "Los campos no pueden estar vacios"
-			console.log("si estan vacion")
 	}
 	else if(usuarioRegex.test(user.value) || usuarioRegex.test(password.value)){
 			
 			e.preventDefault()
 			mensajeError.innerHTML = "No puede contener espacios en blanco"
-
-			console.log("si tiene espacios")
 		} 
 }) 
 

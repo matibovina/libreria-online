@@ -16,7 +16,7 @@
 		<a href="index.jsp"><img class="logo-nav"
 			src="logo/logo_white_large.png" alt=""></a>
 	</header>
-	 <section class="mainSection">
+	<section class="mainSection">
 		<%
 		String mensaje = (String) request.getAttribute("mensaje");
 		%>
@@ -50,11 +50,7 @@
 			</form>
 		</div>
 	</section>
-  <footer>
-    <a class="icon-footer" href="https//:www.facebook.com"><i class="fab fa-facebook"></i></a>
-    <a class="icon-footer" href="https//:www.instagram.com"><i class="fab fa-instagram-square"></i></a>
-    <a class="icon-footer" href="https//:www.twitter.com"><i class="fab fa-twitter"></i></a>
-  </footer>
+	<%@include file="includes/footer.jsp"%>
 	<script src="validacionLogin.js"></script>
 
 </body>

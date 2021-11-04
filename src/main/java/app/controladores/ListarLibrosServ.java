@@ -19,18 +19,6 @@ import app.modelo.Libro;
 public class ListarLibrosServ extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
-	/**
-	 * @see HttpServlet#HttpServlet()
-	 */
-	public ListarLibrosServ() {
-		// TODO Auto-generated constructor stub
-	}
-
-	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
-	 *      response)
-	 */
-
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		// TODO Auto-generated method stub
@@ -43,13 +31,8 @@ public class ListarLibrosServ extends HttpServlet {
 		}
 	}
 
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
-	 *      response)
-	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-
 
 		try {
 
@@ -60,17 +43,17 @@ public class ListarLibrosServ extends HttpServlet {
 		}
 
 	}
-	//SERVIDOR PARA LISTAR TODOS LOS LIBROS EXISTENTES
+
+	// SERVIDOR PARA LISTAR TODOS LOS LIBROS EXISTENTES
 	protected void listarLibros(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException, ClassNotFoundException, SQLException {
 		String listaJSON = "";
 		HttpSession sesion = request.getSession();
 		int id_cliente = Integer.parseInt((sesion.getAttribute("id_cliente").toString()));
-		
+
 		listaJSON = Libro.listaLibrosJSON();
 		PrintWriter out = response.getWriter();
 		out.print(listaJSON);
 	}
 
 }
-

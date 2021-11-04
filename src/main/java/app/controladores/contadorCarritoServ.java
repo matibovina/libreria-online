@@ -18,44 +18,31 @@ import app.modelo.Carrito;
 @WebServlet("/contadorCarritoServ")
 public class contadorCarritoServ extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
-    public contadorCarritoServ() {
-        super();
-        // TODO Auto-generated constructor stub
-    }
 
-	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
-	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		response.getWriter().append("Served at: ").append(request.getContextPath());
 	}
 
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
-	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		HttpSession sesion = request.getSession();
-		int id_cliente = Integer.parseInt((sesion.getAttribute("id_cliente").toString())) ;
+		int id_cliente = Integer.parseInt((sesion.getAttribute("id_cliente").toString()));
 		Carrito carrito = new Carrito();
 		int contadorCarrito = 0;
 		try {
 			contadorCarrito = carrito.contadorCarrito(id_cliente);
-			//contadorCarrito = DAOCarrito.getInstance().contadorCarrito(id_cliente);
+			// contadorCarrito = DAOCarrito.getInstance().contadorCarrito(id_cliente);
 		} catch (ClassNotFoundException | SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}		
+		}
 		PrintWriter out = response.getWriter();
 
 		out.print(contadorCarrito);
-		
-		//doGet(request, response);
+
 	}
 
 }
